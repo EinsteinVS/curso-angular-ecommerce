@@ -1,0 +1,66 @@
+<div class="flex items-center">
+   
+      <div class="relative">
+         <button class="p-2 border rounded relative" (click)="toggleSideMenu()">
+          <div class="absolute -top-2 -left-2 rounded h-5 w-5 bg-red-500 text-white text-xs">
+            {{ totalItems() }}</div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+            />
+          </svg>
+        </button>
+        <span class="w-5 h-5 leading-5 bg-[#ACD9B2] rounded-full block text-white text-center text-xs absolute -top-2.5 -right-2.5"
+        >
+          {{ totalItems() }}
+        </span>
+      
+
+
+<div
+  class="fixed top-0 right-0 z-40 h-screen w-80 border-l border-slate-200 bg-white p-4 text-slate-800 shadow-2xl overflow-y-auto transition-transform"
+  [class.translate-x-full]="hideSideMenu()"
+>
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <p class="text-xl font-semibold text-slate-900">Mi carrito</p>
+        <button class="rounded p-1 text-slate-500 hover:bg-slate-100 hover:text-slate-700" (click)="toggleSideMenu()">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+        >
+            <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+            />
+        </svg>
+        </button>
+    </div>
+  <div class="flex flex-col pt-4 text-slate-700">
+       <app-order-summary></app-order-summary>
+        <div>
+            <button 
+                class="mt-4 w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
+                (click)="checkout()"
+            >
+            Continuar compra
+            </button>
+        </div>
+  </div>
+</div>
+
+  </div>
+</div>

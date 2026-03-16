@@ -1,39 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../services/cart.service';
 import { RouterLinkWithHref, RouterLinkActive } from '@angular/router';
+import { CartComponent} from '@shared/components/cart/cart.component';  
+import { SearchComponent  } from '@shared/components/search/search.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLinkWithHref, RouterLinkActive],
+  imports: [CommonModule, RouterLinkWithHref, RouterLinkActive, CartComponent, SearchComponent  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  hideSideMenu = signal(true);
-  private cartService = inject(CartService);
-  cart = this.cartService.cart;
-  totalItems = this.cartService.totalItems;
-  total = this.cartService.total;
+  showLoginMenu = signal(false);
 
-  toggleSideMenu() {
-    this.hideSideMenu.update(prevState => !prevState);
-  }
-
-  decreaseQuantity(productId: number) {
-    this.cartService.decreaseQuantity(productId);
-  }
-
-  increaseQuantity(productId: number) {
-    this.cartService.increaseQuantity(productId);
-  }
-
-  removeFromCart(productId: number) {
-    this.cartService.removeFromCart(productId);
-  }
-
-  clearCart() {
-    this.cartService.clearCart();
-  }
+  openLoginMenu() { this.showLoginMenu.set(true); }
+  closeLoginMenu() { this.showLoginMenu.set(false); }
 }

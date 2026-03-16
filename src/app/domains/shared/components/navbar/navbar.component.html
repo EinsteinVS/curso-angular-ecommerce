@@ -1,0 +1,73 @@
+<!-- Mobile (hidden on md+) -->
+<div class="block md:hidden shadow">
+  <div class="p-4 flex justify-between items-center">
+    <button class="border-0 bg-transparent cursor-pointer" (click)="toggleMenu()">
+      <img src="./assets/svg/icon_menu.svg" alt="menu">
+    </button>
+    <a href="">
+      <img src="./assets/svg/logo_yard_sale.svg" alt="logo">
+    </a>
+    <a href="">
+      <img src="./assets/svg/icon_shopping_cart.svg" alt="logo">
+    </a>
+  </div>
+  <div
+    class="fixed inset-0 bg-white flex flex-col justify-start transition-all ease-out duration-500"
+    [ngClass]="{ 'translate-x-0': activeMenu, '-translate-x-full': !activeMenu }">
+    <button class="self-end p-4 cursor-pointer" (click)="toggleMenu()">Close</button>
+    <ul class="list-none p-4 m-0 flex flex-col gap-2">
+      <!-- Active class example  <ul class="flex space-x-6"> -->
+        <li>
+            <a
+              routerLink="/"
+              routerLinkActive="underline"
+              [routerLinkActiveOptions]="{exact: true}"
+              class="block hover:underline"
+              aria-current="page"
+              >Home</a
+            >
+        </li>
+        <li>
+            <a
+              routerLink="/about"
+              routerLinkActive="underline"
+              class="block hover:underline"
+              >About</a
+            >
+        </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Desktop (hidden on mobile, visible on md+) -->
+<div class="hidden md:block shadow">
+  <div class="px-4 py-3 flex justify-between items-center">
+    <nav class="flex items-center">
+
+      <ul class="flex space-x-6">
+          <li>
+            <a
+              routerLink="/"
+              routerLinkActive="underline"
+              [routerLinkActiveOptions]="{exact: true}"
+              class="block hover:underline"
+              aria-current="page"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/about"
+              routerLinkActive="underline"
+              class="block hover:underline"
+              >About</a
+            >
+          </li>
+        </ul>
+    </nav>
+    <div class="flex items-center">
+      <div class="mr-2">Bienvenido!!</div>
+
+    </div>
+  </div>
+</div>
