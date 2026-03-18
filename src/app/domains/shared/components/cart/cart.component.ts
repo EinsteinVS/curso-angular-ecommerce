@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
 import  { OrderSummaryComponent } from '../order-summary/order-summary.component';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,6 +19,8 @@ export class CartComponent {
   totalItems = this.cartService.totalItems;
   total = this.cartService.total;
   router = inject(Router);
+  private authService = inject(AuthService);
+
   toggleSideMenu() {
     this.hideSideMenu.update(prevState => !prevState);
   }
@@ -39,8 +42,12 @@ export class CartComponent {
   }
 
   checkout() {
-    // Aquí puedes implementar la lógica de checkout, como redirigir a una página de pago o mostrar un resumen del pedido.
     this.toggleSideMenu();
-    this.router.navigate(['/checkout']);
-  } 
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/checkout']);
+      return;
+    }
+
+    this.router.navigate(['/auth/register']);
+  }
 }

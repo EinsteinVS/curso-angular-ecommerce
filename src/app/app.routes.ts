@@ -24,17 +24,9 @@ export const routes: Routes = [
                 loadComponent: () => import('./domains/checkout/pages/order/order.component')
             },
             {
-                path: 'login',
-                loadComponent: () =>
-                    import('./domains/auth/pages/login/login.component')
-                    .then(m => m.LoginComponent)
-             },
-            {
-                path: 'register',
-                loadComponent: () =>
-                    import('./domains/auth/pages/register/register.component')
-                    .then(m => m.RegisterComponent)
-             }
+                path: 'auth',
+                loadChildren: () => import('./domains/auth/auth.routes').then(m => m.default)
+            }
              
         ]
     },

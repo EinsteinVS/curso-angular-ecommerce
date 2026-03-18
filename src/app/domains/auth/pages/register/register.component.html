@@ -1,4 +1,11 @@
-<div class="flex min-h-[calc(100vh-130px)] items-center justify-center py-10">
+@if (statusUser().status !== 'success') {
+  <app-search-email></app-search-email>
+}
+
+@if (statusUser().status === 'success') {
+<div
+ class="flex min-h-[calc(100vh-130px)] items-center justify-center py-10"
+ >
   <div class="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
 
     <!-- Header -->
@@ -138,3 +145,4 @@
 
   </div>
 </div>
+}

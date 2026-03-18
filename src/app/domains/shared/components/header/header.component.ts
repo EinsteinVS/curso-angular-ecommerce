@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLinkWithHref, RouterLinkActive } from '@angular/router';
+import { Router, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
 import { CartComponent} from '@shared/components/cart/cart.component';  
 import { SearchComponent  } from '@shared/components/search/search.component';
-
+import { AuthService } from '../../../auth/auth.service';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -13,7 +13,15 @@ import { SearchComponent  } from '@shared/components/search/search.component';
 })
 export class HeaderComponent {
   showLoginMenu = signal(false);
+  authService = inject(AuthService);
+  private router = inject(Router);
 
   openLoginMenu() { this.showLoginMenu.set(true); }
   closeLoginMenu() { this.showLoginMenu.set(false); }
+
+  logout() {
+    this.authService.logout();
+    this.closeLoginMenu();
+    this.router.navigate(['/']);
+  }
 }
