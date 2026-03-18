@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   checkEmailExists(email: string) {
-    return this.http.get<ResponseStatus>(`http://localhost:5268/api/user/email?email=${email}`).pipe(
+    return this.http.get<boolean>(`http://localhost:5268/api/user/email?email=${email}`).pipe(
       tap({
         next: (response) => {
           console.log('checkEmailExists next:', response);

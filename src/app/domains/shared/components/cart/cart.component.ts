@@ -21,6 +21,10 @@ export class CartComponent {
   router = inject(Router);
   private authService = inject(AuthService);
 
+  isLoggedIn() {
+    return this.authService.isLoggedIn();
+  }
+
   toggleSideMenu() {
     this.hideSideMenu.update(prevState => !prevState);
   }
@@ -48,6 +52,16 @@ export class CartComponent {
       return;
     }
 
+    this.router.navigate(['/auth/login']);
+  }
+
+  goToLogin() {
+    this.toggleSideMenu();
+    this.router.navigate(['/auth/login']);
+  }
+
+  goToRegister() {
+    this.toggleSideMenu();
     this.router.navigate(['/auth/register']);
   }
 }
