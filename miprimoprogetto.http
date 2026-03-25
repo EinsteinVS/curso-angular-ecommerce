@@ -1,0 +1,336 @@
+#####################################################################
+#                            SETUP                                  #
+#####################################################################
+@miprimoprogetto_HostAddress = http://localhost:5268
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibWFyaW8ucm9zc2lAZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXIiLCJEZXBhcnRtZW50IjoiQ3VzdG9tZXJDYXJlIiwiRW1wbG95ZWVJZCI6IlVTUi0yIiwiUGVybWlzc2lvbiI6IkNhbkRlbGV0ZVVzZXJzIiwianRpIjoiNWQxYzg1ZjItMmYxNC00YWQxLThjNmEtZTFkOWI0MDE3ZWQ1IiwiaWF0IjoiMTc3NDM0NDAzNSIsIlByb2ZpbGUiOiJwZXJzb24iLCJleHAiOjE3NzQzNDc2MzUsImlzcyI6Ik15QXBpIiwiYXVkIjoiTXlBcGlVc2VycyJ9.O-RMfN-o3e3qes-fRpBYxx5Ra5emZ4SdvK2D8YWb_WI
+@authEmail = mario.rossi@email.com
+@authPassword = NuovaPassword456!
+#@authPassword = PasswordSicura123!
+
+
+#####################################################################
+#                            AUTH                                   #
+#####################################################################
+
+### Register (crea User + Customer)
+POST {{miprimoprogetto_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Mario",
+  "lastName": "Rossi",
+  "email": "{{authEmail}}",
+  "password": "{{authPassword}}",
+  "tipoDocumento": "DNI",
+  "numeroDocumento": "12345678",
+  "phoneNumber": "+56912345678",
+  "edad": "34",
+  "genero": "M",
+  "geo1": "Santiago, CL",
+  "addresses": "Av. Providencia 1234, Santiago",
+  "payments": "VISA, Mastercard"
+}
+
+### Change Password (utente autenticato)
+POST {{miprimoprogetto_HostAddress}}/api/auth/change-password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "currentPassword": "{{authPassword}}",
+  "newPassword": "NuovaPassword456!"
+}
+
+### Forgot Password (genera reset token)
+POST {{miprimoprogetto_HostAddress}}/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "{{authEmail}}"
+}
+
+### Reset Password (usa il token ricevuto)
+POST {{miprimoprogetto_HostAddress}}/api/auth/reset-password
+Content-Type: application/json
+
+{
+  "email": "{{authEmail}}",
+  "resetToken": "INCOLLA_QUI_IL_RESET_TOKEN",
+  "newPassword": "NuovaPassword456!"
+}
+
+### Login (usa email/password registrati)
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{authEmail}}",
+  "password": "{{authPassword}}"
+}
+
+
+#####################################################################
+#                         USER - READ                               #
+#####################################################################
+
+### Get all users (Require Auth)
+GET {{miprimoprogetto_HostAddress}}/api/user
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### Get user by id
+GET {{miprimoprogetto_HostAddress}}/api/user/12
+Accept: application/json
+
+### Get user by email
+GET {{miprimoprogetto_HostAddress}}/api/user/email?email=einstein@gmail.com
+Accept: application/json
+
+
+#####################################################################
+#                        USER - CREATE                              #
+#####################################################################
+
+### Create new user
+POST {{miprimoprogetto_HostAddress}}/api/user
+Content-Type: application/json
+
+{
+  "name": "Albert 2",
+  "lastName": "Einstein 2 ",
+  "email": "einstein@gmail.com",
+  "phoneNumber": "+39 123 456 7890",
+  "tipoDocumento": "PassportNumber",
+  "numeroDocumento": "AB1234567",
+  "role": "Customer",
+  "isActive": true
+}
+
+
+#####################################################################
+#                        USER - UPDATE                              #
+#####################################################################
+
+### Update user
+PUT {{miprimoprogetto_HostAddress}}/api/user/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "name": "Albert",
+  "lastName": "Einstein",
+  "email": "albert.einstein@gmail.com",
+  "phoneNumber": "+39 123 456 7890",
+  "tipoDocumento": "PassportNumber",
+  "numeroDocumento": "AB123456",
+  "role": "Customer",
+  "isActive": true
+}
+
+
+#####################################################################
+#                        USER - DELETE                              #
+#####################################################################
+
+### Delete user (Require Admin Role)
+DELETE {{miprimoprogetto_HostAddress}}/api/user/13
+Accept: application/json
+Authorization: Bearer {{token}}
+
+
+#####################################################################
+#                       CATEGORY - READ                             #
+#####################################################################
+
+### Get all categories
+GET {{miprimoprogetto_HostAddress}}/api/category
+Accept: application/json
+
+### Get category by id
+GET {{miprimoprogetto_HostAddress}}/api/category/1
+Accept: application/json
+
+
+#####################################################################
+#                       CATEGORY - CREATE                           #
+#####################################################################
+
+### Create new category (Require Admin or Manager)
+POST {{miprimoprogetto_HostAddress}}/api/category
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Electronics",
+  "slug": "electronics",
+  "description": "Electronic devices and accessories",
+  "isActive": true
+}
+
+
+#####################################################################
+#                       CATEGORY - UPDATE                           #
+#####################################################################
+
+### Update category (Require Admin or Manager)
+PUT {{miprimoprogetto_HostAddress}}/api/category/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 1,
+  "name": "Electronics Updated",
+  "slug": "electronics-updated",
+  "description": "Updated description",
+  "isActive": true
+}
+
+
+#####################################################################
+#                       CATEGORY - DELETE                           #
+#####################################################################
+
+### Delete category (Require Admin Role)
+DELETE {{miprimoprogetto_HostAddress}}/api/category/1
+Authorization: Bearer {{token}}
+
+
+#####################################################################
+#                        PRODUCT - READ                             #
+#####################################################################
+
+### Get all products
+GET {{miprimoprogetto_HostAddress}}/api/product
+Accept: application/json
+
+### Get product by id
+GET {{miprimoprogetto_HostAddress}}/api/product/2
+Accept: application/json
+
+
+#####################################################################
+#                        PRODUCT - CREATE                           #
+#####################################################################
+
+### Create new product (Require Admin or Manager)
+POST {{miprimoprogetto_HostAddress}}/api/product
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "sku": "ELEC-006",
+  "name": "Laptop Pro X 16",
+  "description": "High-performance laptop",
+  "categoryId": 1,
+  "brand": "TechBrand",
+  "price": 1399.99,
+  "currency": "EUR",
+  "stockQuantity": 10,
+  "imageUrl": "https://mybucket.s3.amazonaws.com/products/1/laptop-X.jpg",
+  "isActive": true
+}
+
+
+#####################################################################
+#                        PRODUCT - UPDATE                           #
+#####################################################################
+
+### Update product (Require Admin or Manager)
+PUT {{miprimoprogetto_HostAddress}}/api/product/2
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 2,
+  "sku": "ELEC-001",
+  "name": "Laptop Pro 15 Updated",
+  "description": "Updated description",
+  "categoryId": 1,
+  "brand": "TechBrand",
+  "price": 1199.99,
+  "currency": "EUR",
+  "stockQuantity": 45,
+  "imageUrl": "https://static.cybertron.com/clx/home/pcs-laps-section/custom-gaming-pcs.jpg",
+  "isActive": true
+}
+
+
+#####################################################################
+#                        PRODUCT - DELETE                           #
+#####################################################################
+
+### Delete product (Require Admin Role)
+DELETE {{miprimoprogetto_HostAddress}}/api/product/1
+Authorization: Bearer {{token}}
+
+
+#####################################################################
+#                     PRODUCT IMAGES - READ                         #
+#####################################################################
+
+### Get all images of a product
+GET {{miprimoprogetto_HostAddress}}/api/products/1002/images
+Accept: application/json
+
+### Get product image by id
+GET {{miprimoprogetto_HostAddress}}/api/products/2/images/3
+Accept: application/json
+
+
+#####################################################################
+#                     PRODUCT IMAGES - CREATE                       #
+#####################################################################
+
+### Add image to product (Require Admin or Manager)
+POST {{miprimoprogetto_HostAddress}}/api/products/1002/images
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "productId": 1002,
+  "imageUrl": "https://mybucket.s3.amazonaws.com/products/1/laptop-angle-1.jpg",
+  "altText": "Laptop front view",
+  "displayOrder": 1,
+  "isPrimary": true
+}
+
+### Add second image to product (Require Admin or Manager)
+POST {{miprimoprogetto_HostAddress}}/api/products/1002/images
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "productId": 1002,
+  "imageUrl": "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce",
+  "altText": "Laptop side view 2",
+  "displayOrder": 2,
+  "isPrimary": false
+}
+
+
+#####################################################################
+#                     PRODUCT IMAGES - UPDATE                       #
+#####################################################################
+
+### Update product image (Require Admin or Manager)
+PUT {{miprimoprogetto_HostAddress}}/api/products/2/images/3
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 3,
+  "productId": 2,
+  "imageUrl": "https://mybucket.s3.amazonaws.com/products/1/laptop-angle-1-updated.jpg",
+  "altText": "Laptop front 3",
+  "displayOrder": 3,
+  "isPrimary": false
+}
+
+
+#####################################################################
+#                     PRODUCT IMAGES - DELETE                       #
+#####################################################################
+
+### Delete product image (Require Admin)
+DELETE {{miprimoprogetto_HostAddress}}/api/products/2/images/1
+Authorization: Bearer {{token}}

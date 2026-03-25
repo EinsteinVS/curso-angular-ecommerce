@@ -49,7 +49,7 @@
 
       <!-- Submit -->
        @if (responseStatus().status === 'error') {
-          <p class="mt-1 text-xs text-red-400">Error al iniciar sesión.</p>
+         <p class="mt-1 text-xs text-red-400">{{ errorMessage() || 'Error al iniciar sesión.' }}</p>
         }
       <button
         type="submit"

@@ -1,48 +1,92 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { loginResponse } from '@shared/models/login.model';
-import { ResponseStatus } from '@shared/models/ResponseStatus';
-import { tap } from 'rxjs';
+import { loginResponse, RegisterRequest, RegisterResponse } from '@shared/models/login.model';
+import { tap, throwError } from 'rxjs';
+import { ApiService } from '../../core/services/api.service';
+import { StoreSession } from '../../core/models/session.model';
+import { SessionService } from '../../core/services/session.service';
+
+type LoginApiResponse = loginResponse & {
+  storeSession?: StoreSession;
+  session?: StoreSession;
+  login?: StoreSession['login'];
+  page?: StoreSession['page'];
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly tokenKey = 'auth_token';
   
-  constructor(private http: HttpClient) { 
+  constructor(private api: ApiService, private sessionService: SessionService) {
 
   }
 
-  login(username: string, password: string) {
-    return this.http.post<loginResponse>('http://localhost:5268/api/auth/login', {
-      Username: 'einstein',//username,
-      Password: password
+  register(data: RegisterRequest) {
+    return this.api.post<RegisterResponse>('/api/auth/register', data);
+  }
+
+  login(email: string, password: string) {
+    return this.api.post<LoginApiResponse>('/api/auth/login', {
+      email: email,
+      password: password
     }).pipe(
       tap((response) => {
-        if (typeof localStorage !== 'undefined' && response?.token) {
-          localStorage.setItem(this.tokenKey, response.token);
+        debugger
+        if ((response as any)?.error) {
+          throw new Error((response as any).error);
+        }
+
+        if (response?.token) {
+          this.sessionService.setAuthToken(response.token);
+        }
+
+        const session = this.extractSession(response);
+        if (session) {
+          this.sessionService.setSession(session);
+          return;
+        }
+
+        if (response?.token) {
+          this.sessionService.clearSession();
+          throw new Error('SESSION_EMPTY');
         }
       })
     );
   }
 
   isLoggedIn() {
-    if (typeof localStorage === 'undefined') {
-      return false;
-    }
-
-    return !!localStorage.getItem(this.tokenKey);
+    return this.sessionService.isLoggedIn();
   }
 
   logout() {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem(this.tokenKey);
+    this.sessionService.clearSession();
+  }
+
+  private extractSession(response: LoginApiResponse): StoreSession | null {
+    if (this.isValidStoreSession(response.storeSession)) {
+      return response.storeSession;
     }
+
+    if (this.isValidStoreSession(response.session)) {
+      return response.session;
+    }
+
+    if (response.login && response.page) {
+      return {
+        login: response.login,
+        page: response.page,
+      };
+    }
+
+    return null;
+  }
+
+  private isValidStoreSession(session?: StoreSession): session is StoreSession {
+    return !!session?.login && !!session?.page;
   }
 
   checkEmailExists(email: string) {
-    return this.http.get<boolean>(`http://localhost:5268/api/user/email?email=${email}`).pipe(
+    return this.api.get<boolean>(`/api/user/email?email=${email}`).pipe(
       tap({
         next: (response) => {
           console.log('checkEmailExists next:', response);

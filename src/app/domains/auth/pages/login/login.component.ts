@@ -14,6 +14,7 @@ import { ResponseStatus } from '@shared/models/ResponseStatus';
 })
 export class LoginComponent {
   responseStatus = signal<ResponseStatus>({ status: 'initial' });
+  errorMessage = signal<string>('');
   pagRedirect = signal<string>('');
   constructor( 
     private route: ActivatedRoute,
@@ -24,7 +25,6 @@ export class LoginComponent {
 
   this.route.queryParams.subscribe(params => {
       const email = params['email'];
-      debugger;
       if(email) {
         this.form.get('email')?.setValue(email);
         this.pagRedirect.set('/checkout');
@@ -52,19 +52,48 @@ export class LoginComponent {
 
     if (!email || !password) return;
 
+    this.responseStatus.set({ status: 'loading' });
+    this.errorMessage.set('');
+
     this.authService.login(email, password).subscribe({
         next: (response) => {
           if (response?.token) {
+            this.responseStatus.set({ status: 'success' });
             this.router.navigate([`${this.pagRedirect()}`]);
+            return;
           }
+
+          this.responseStatus.set({ status: 'error' });
+          this.errorMessage.set('Credenziali non valide o sessione incompleta.');
         },
         error: (error) => {
           this.responseStatus.set({ status: 'error' });
-          
-          console.error('Error al iniciar sesión:', error);
+          this.errorMessage.set(this.getLoginErrorMessage(error));
         }
     });
-    console.log('Login:', this.form.value);
+  }
+
+  private getLoginErrorMessage(error: unknown): string {
+    // Handle HttpErrorResponse
+    if (error && typeof error === 'object' && 'status' in error) {
+      const httpError = error as any;
+      
+      if (httpError.status === 401) {
+        return 'Credenziali non valide.';
+      }
+      
+      if (httpError.error?.error) {
+        return httpError.error.error;
+      }
+    }
+
+    const message = error instanceof Error ? error.message : '';
+
+    if (message === 'SESSION_EMPTY') {
+      return 'Accesso non completato: sessione non disponibile. Riprova.';
+    }
+
+    return 'Errore al login. Verifica le credenziali e riprova.';
   }
 
 }

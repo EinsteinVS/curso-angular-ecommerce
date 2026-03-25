@@ -89,16 +89,126 @@
         <label class="mb-1 block text-xs font-medium text-gray-600">Teléfono</label>
         <input
           type="tel"
-          formControlName="phone"
-          placeholder="+34 600 000 000"
+          formControlName="phoneNumber"
+          placeholder="+56 9 0000 0000"
           class="w-full rounded border border-gray-300 px-3 py-2 text-sm text-gray-800 outline-none transition
             focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
-          [class.border-red-400]="f['phone'].invalid && f['phone'].touched"
-          [class.border-gray-300]="!(f['phone'].invalid && f['phone'].touched)"
+          [class.border-red-400]="f['phoneNumber'].invalid && f['phoneNumber'].touched"
+          [class.border-gray-300]="!(f['phoneNumber'].invalid && f['phoneNumber'].touched)"
         >
-        @if (f['phone'].invalid && f['phone'].touched) {
+        @if (f['phoneNumber'].invalid && f['phoneNumber'].touched) {
           <p class="mt-1 text-xs text-red-400">Formato de teléfono inválido.</p>
         }
+      </div>
+
+      <!-- Tipo + Número de documento -->
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="mb-1 block text-xs font-medium text-gray-600">Tipo documento <span class="text-red-400">*</span></label>
+          <select
+            formControlName="tipoDocumento"
+            class="w-full rounded border px-3 py-2 text-sm text-gray-800 outline-none transition
+              focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+            [class.border-red-400]="f['tipoDocumento'].invalid && f['tipoDocumento'].touched"
+            [class.border-gray-300]="!(f['tipoDocumento'].invalid && f['tipoDocumento'].touched)"
+          >
+            <option value="">Selecciona</option>
+            <option value="DNI">DNI</option>
+            <option value="Pasaporte">Pasaporte</option>
+            <option value="RUT">RUT</option>
+          </select>
+          @if (f['tipoDocumento'].invalid && f['tipoDocumento'].touched) {
+            <p class="mt-1 text-xs text-red-400">Campo requerido.</p>
+          }
+        </div>
+        <div>
+          <label class="mb-1 block text-xs font-medium text-gray-600">Número documento <span class="text-red-400">*</span></label>
+          <input
+            type="text"
+            formControlName="numeroDocumento"
+            placeholder="12345678"
+            class="w-full rounded border px-3 py-2 text-sm text-gray-800 outline-none transition
+              focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+            [class.border-red-400]="f['numeroDocumento'].invalid && f['numeroDocumento'].touched"
+            [class.border-gray-300]="!(f['numeroDocumento'].invalid && f['numeroDocumento'].touched)"
+          >
+          @if (f['numeroDocumento'].invalid && f['numeroDocumento'].touched) {
+            <p class="mt-1 text-xs text-red-400">Campo requerido.</p>
+          }
+        </div>
+      </div>
+
+      <!-- Edad + Género -->
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="mb-1 block text-xs font-medium text-gray-600">Edad <span class="text-red-400">*</span></label>
+          <input
+            type="number"
+            formControlName="edad"
+            placeholder="25"
+            min="1" max="120"
+            class="w-full rounded border px-3 py-2 text-sm text-gray-800 outline-none transition
+              focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+            [class.border-red-400]="f['edad'].invalid && f['edad'].touched"
+            [class.border-gray-300]="!(f['edad'].invalid && f['edad'].touched)"
+          >
+          @if (f['edad'].invalid && f['edad'].touched) {
+            <p class="mt-1 text-xs text-red-400">Campo requerido.</p>
+          }
+        </div>
+        <div>
+          <label class="mb-1 block text-xs font-medium text-gray-600">Género <span class="text-red-400">*</span></label>
+          <select
+            formControlName="genero"
+            class="w-full rounded border px-3 py-2 text-sm text-gray-800 outline-none transition
+              focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+            [class.border-red-400]="f['genero'].invalid && f['genero'].touched"
+            [class.border-gray-300]="!(f['genero'].invalid && f['genero'].touched)"
+          >
+            <option value="">Selecciona</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+          </select>
+          @if (f['genero'].invalid && f['genero'].touched) {
+            <p class="mt-1 text-xs text-red-400">Campo requerido.</p>
+          }
+        </div>
+      </div>
+
+      <!-- Ciudad / Región -->
+      <div>
+        <label class="mb-1 block text-xs font-medium text-gray-600">Ciudad / Región</label>
+        <input
+          type="text"
+          formControlName="geo1"
+          placeholder="Santiago, CL"
+          class="w-full rounded border border-gray-300 px-3 py-2 text-sm text-gray-800 outline-none transition
+            focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+        >
+      </div>
+
+      <!-- Dirección -->
+      <div>
+        <label class="mb-1 block text-xs font-medium text-gray-600">Dirección</label>
+        <input
+          type="text"
+          formControlName="addresses"
+          placeholder="Av. Providencia 1234, Santiago"
+          class="w-full rounded border border-gray-300 px-3 py-2 text-sm text-gray-800 outline-none transition
+            focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+        >
+      </div>
+
+      <!-- Medios de pago -->
+      <div>
+        <label class="mb-1 block text-xs font-medium text-gray-600">Medios de pago</label>
+        <input
+          type="text"
+          formControlName="payments"
+          placeholder="VISA, Mastercard"
+          class="w-full rounded border border-gray-300 px-3 py-2 text-sm text-gray-800 outline-none transition
+            focus:border-indigo-400 focus:ring-1 focus:ring-indigo-200"
+        >
       </div>
 
       <!-- Contraseña -->
@@ -114,7 +224,7 @@
           [class.border-gray-300]="!(f['password'].invalid && f['password'].touched)"
         >
         @if (f['password'].invalid && f['password'].touched) {
-          <p class="mt-1 text-xs text-red-400">Mínimo 4 caracteres.</p>
+          <p class="mt-1 text-xs text-red-400">Mínimo 8 caracteres.</p>
         }
       </div>
 
@@ -134,6 +244,11 @@
           <p class="mt-1 text-xs text-red-400">Las contraseñas no coinciden.</p>
         }
       </div>
+
+      <!-- Error registro -->
+      @if (registerStatus().status === 'error') {
+        <p class="text-xs text-red-400">{{ registerErrorMessage() || 'Error al registrarse. Verifica los datos e intenta de nuevo.' }}</p>
+      }
 
       <!-- Submit -->
       <button

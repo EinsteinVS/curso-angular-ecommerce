@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { ResponseStatus } from '@shared/models/ResponseStatus';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { SearchEmailComponent } from '../../components/search-email/search-email.component';
 import { AuthService } from '../../auth.service';
 
@@ -25,6 +25,8 @@ export class RegisterComponent implements OnDestroy {
   
   private fb = new FormBuilder();
   statusUser = signal<ResponseStatus>({ status: 'initial' });
+  registerStatus = signal<ResponseStatus>({ status: 'initial' });
+  registerErrorMessage = signal<string>('');
   registerCompleted = signal(false);
   TIMER_SECONDS = 5;
   redirectSeconds = signal(this.TIMER_SECONDS);
@@ -43,9 +45,16 @@ export class RegisterComponent implements OnDestroy {
     name: ['', [Validators.required, Validators.minLength(2)]],
     lastName: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.pattern(/^[+]?[\d\s\-]{7,15}$/)]],
-    password: ['', [Validators.required, Validators.minLength(4)]],
+    phoneNumber: ['', [Validators.pattern(/^[+]?[\d\s\-]{7,15}$/)]],
+    tipoDocumento: ['', Validators.required],
+    numeroDocumento: ['', Validators.required],
+    edad: ['', Validators.required],
+    genero: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(8)]],
     confirmPassword: ['', Validators.required],
+    geo1: [''],
+    addresses: [''],
+    payments: [''],
   }, { validators: passwordMatch });
 
   get f() { return this.form.controls; }
@@ -56,34 +65,56 @@ export class RegisterComponent implements OnDestroy {
       return;
     }
 
-    const { email, password } = this.form.getRawValue();
-    if (!email || !password) {
-      return;
-    }
+    const { name, lastName, email, password, phoneNumber, tipoDocumento, numeroDocumento, edad, genero, geo1, addresses, payments } = this.form.getRawValue();
 
-    this.authService.login(email, password).subscribe({
+    if (!name || !lastName || !email || !password || !tipoDocumento || !numeroDocumento || !edad || !genero) return;
+
+    this.registerStatus.set({ status: 'loading' });
+    this.registerErrorMessage.set('');
+
+    this.authService.register({
+      name, 
+      lastName, 
+      email,
+      password,
+      tipoDocumento,
+      numeroDocumento,
+      edad: String(edad),
+      genero,
+      phoneNumber: phoneNumber || undefined,
+      geo1: geo1 || undefined,
+      addresses: addresses || undefined,
+      payments: payments || undefined
+    }).subscribe({
       next: () => {
-        this.clearRedirectTimers();
-        this.redirectSeconds.set(this.TIMER_SECONDS);
-        this.registerCompleted.set(true);
-        this.redirectIntervalId = setInterval(() => {
-          const remainingSeconds = this.redirectSeconds();
-          if (remainingSeconds > 0) {
-            this.redirectSeconds.set(remainingSeconds - 1);
+        this.authService.login(email, password).subscribe({
+          next: () => {
+            this.clearRedirectTimers();
+            this.redirectSeconds.set(this.TIMER_SECONDS);
+            this.registerCompleted.set(true);
+            this.redirectIntervalId = setInterval(() => {
+              const remainingSeconds = this.redirectSeconds();
+              if (remainingSeconds > 0) {
+                this.redirectSeconds.set(remainingSeconds - 1);
+              }
+            }, 1000);
+            this.redirectTimeoutId = setTimeout(() => {
+              this.clearRedirectTimers();
+              this.router.navigate(['/']);
+            }, this.TIMER_SECONDS * 1000);
+          },
+          error: () => {
+            this.router.navigate(['/auth/login'], { queryParams: { email } });
           }
-        }, 1000);
-
-        this.redirectTimeoutId = setTimeout(() => {
-          this.clearRedirectTimers();
-          this.router.navigate(['/']);
-        }, this.TIMER_SECONDS * 1000);
+        });
       },
       error: (error) => {
-        console.error('Error al iniciar sesión después del registro:', error);
+        debugger;
+        console.error('register error:', error);
+        this.registerStatus.set({ status: 'error' });
+        this.registerErrorMessage.set(this.getRegisterErrorMessage(error));
       }
     });
-
-    console.log('Register:', this.form.value);
   }
 
   goToAbout() {
@@ -141,5 +172,55 @@ export class RegisterComponent implements OnDestroy {
       clearInterval(this.redirectIntervalId);
       this.redirectIntervalId = null;
     }
+  }
+
+  private getRegisterErrorMessage(error: unknown): string {
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 400) {
+        const backendMessage = this.extractBackendErrorMessage(error.error);
+        return backendMessage || 'Dati non validi. Controlla i campi richiesti e riprova.';
+      }
+
+      if (error.status === 409) {
+        return 'Email già registrata.';
+      }
+    }
+
+    return 'Errore al registrarsi. Verifica i dati e riprova.';
+  }
+
+  private extractBackendErrorMessage(errorBody: unknown): string {
+    if (!errorBody) {
+      return '';
+    }
+
+    if (typeof errorBody === 'string') {
+      return errorBody;
+    }
+
+    if (typeof errorBody === 'object') {
+      const body = errorBody as Record<string, unknown>;
+
+      if (typeof body['error'] === 'string') {
+        return body['error'];
+      }
+
+      if (typeof body['message'] === 'string') {
+        return body['message'];
+      }
+
+      const errors = body['errors'];
+      if (errors && typeof errors === 'object') {
+        const firstError = Object.values(errors as Record<string, unknown[]>)
+          .flat()
+          .find((value) => typeof value === 'string');
+
+        if (typeof firstError === 'string') {
+          return firstError;
+        }
+      }
+    }
+
+    return '';
   }
 }
