@@ -1,0 +1,51 @@
+<h2 class="mb-4 text-xl font-semibold text-slate-900">Profilo</h2>
+
+<form [formGroup]="form" (ngSubmit)="saveProfile()" class="grid gap-4 md:max-w-xl">
+
+  <label class="grid gap-1">
+    <span class="text-sm font-medium text-slate-700">Nome</span>
+    <input type="text" formControlName="name" class="rounded border border-slate-300 px-3 py-2">
+  </label>
+
+  <label class="grid gap-1">
+    <span class="text-sm font-medium text-slate-700">Cognome</span>
+    <input type="text" formControlName="lastName" class="rounded border border-slate-300 px-3 py-2">
+  </label>
+
+  <label class="grid gap-1">
+    <span class="text-sm font-medium text-slate-700">Email</span>
+    <input type="email" formControlName="email" class="rounded border border-slate-300 px-3 py-2">
+  </label>
+
+  <label class="grid gap-1">
+    <span class="text-sm font-medium text-slate-700">Telefono</span>
+    <input type="text" formControlName="phoneNumber" class="rounded border border-slate-300 px-3 py-2">
+  </label>
+
+  <label class="grid gap-1">
+    <span class="text-sm font-medium text-slate-700">Tipo documento</span>
+    <input type="text" formControlName="tipoDocumento" class="rounded border border-slate-300 px-3 py-2">
+  </label>
+
+  <label class="grid gap-1">
+    <span class="text-sm font-medium text-slate-700">Numero documento</span>
+    <input type="text" formControlName="numeroDocumento" class="rounded border border-slate-300 px-3 py-2">
+  </label>
+
+  @if (saveSuccess) {
+    <p class="text-sm text-green-600">Profilo salvato con successo.</p>
+  }
+  @if (saveError) {
+    <p class="text-sm text-red-600">Errore durante il salvataggio. Riprova.</p>
+  }
+
+  <div>
+    <button
+      type="submit"
+      [disabled]="isSaving"
+      class="rounded bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+    >
+      {{ isSaving ? 'Salvataggio...' : 'Salva profilo' }}
+    </button>
+  </div>
+</form>

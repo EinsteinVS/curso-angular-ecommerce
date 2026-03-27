@@ -1,0 +1,33 @@
+<h2 class="mb-4 text-xl font-semibold text-slate-900">Dashboard</h2>
+
+<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+  <article class="rounded border border-slate-200 p-3">
+    <p class="text-xs uppercase tracking-wide text-slate-500">Cliente ID</p>
+    <p class="text-base font-semibold text-slate-900">{{ summary().clienteID || 'N/D' }}</p>
+  </article>
+
+  <article class="rounded border border-slate-200 p-3">
+    <p class="text-xs uppercase tracking-wide text-slate-500">Tipo account</p>
+    <p class="text-base font-semibold text-slate-900">{{ summary().customerType }}</p>
+  </article>
+
+  <article class="rounded border border-slate-200 p-3">
+    <p class="text-xs uppercase tracking-wide text-slate-500">Età</p>
+    <p class="text-base font-semibold text-slate-900">{{ summary().age || 'N/D' }}</p>
+  </article>
+
+  <article class="rounded border border-slate-200 p-3">
+    <p class="text-xs uppercase tracking-wide text-slate-500">Genere</p>
+    <p class="text-base font-semibold text-slate-900">{{ summary().gender || 'N/D' }}</p>
+  </article>
+
+  <article class="rounded border border-slate-200 p-3">
+    <p class="text-xs uppercase tracking-wide text-slate-500">Indirizzi</p>
+    <p class="text-base font-semibold text-slate-900">{{ summary().addressesCount }}</p>
+  </article>
+
+  <article class="rounded border border-slate-200 p-3">
+    <p class="text-xs uppercase tracking-wide text-slate-500">Metodi pagamento</p>
+    <p class="text-base font-semibold text-slate-900">{{ summary().paymentsCount }}</p>
+  </article>
+</div>

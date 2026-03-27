@@ -26,6 +26,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./domains/checkout/pages/order/order.component')
             },
             {
+                path: 'account',
+                loadChildren: () => import('./domains/account/account.routes').then(m => m.default)
+            },
+            {
                 path: 'auth',
                 loadChildren: () => import('./domains/auth/auth.routes').then(m => m.default)
             }

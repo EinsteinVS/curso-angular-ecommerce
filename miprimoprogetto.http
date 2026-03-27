@@ -2,11 +2,40 @@
 #                            SETUP                                  #
 #####################################################################
 @miprimoprogetto_HostAddress = http://localhost:5268
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibWFyaW8ucm9zc2lAZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXIiLCJEZXBhcnRtZW50IjoiQ3VzdG9tZXJDYXJlIiwiRW1wbG95ZWVJZCI6IlVTUi0yIiwiUGVybWlzc2lvbiI6IkNhbkRlbGV0ZVVzZXJzIiwianRpIjoiNWQxYzg1ZjItMmYxNC00YWQxLThjNmEtZTFkOWI0MDE3ZWQ1IiwiaWF0IjoiMTc3NDM0NDAzNSIsIlByb2ZpbGUiOiJwZXJzb24iLCJleHAiOjE3NzQzNDc2MzUsImlzcyI6Ik15QXBpIiwiYXVkIjoiTXlBcGlVc2VycyJ9.O-RMfN-o3e3qes-fRpBYxx5Ra5emZ4SdvK2D8YWb_WI
-@authEmail = mario.rossi@email.com
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibWFyaW8ucm9zc2kyQGVtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNCIsInN1YiI6IjQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDdXN0b21lciIsIkRlcGFydG1lbnQiOiJDdXN0b21lckNhcmUiLCJFbXBsb3llZUlkIjoiVVNSLTQiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiI2NDlhNjIxMi05OTcwLTQ0ZmItYWEzMy1mZmIxYTNiMWY4YzIiLCJpYXQiOiIxNzc0NTk4NTI2IiwiUHJvZmlsZSI6InBlcnNvbiIsImV4cCI6MTc3NDYwMjEyNiwiaXNzIjoiTXlBcGkiLCJhdWQiOiJNeUFwaVVzZXJzIn0.8krImgpGG86I1oztb2lOqNUf3czMqrlSPF1ZF1iztQU
+@authEmail = mario.rossi2@email.com
 @authPassword = NuovaPassword456!
 #@authPassword = PasswordSicura123!
 
+@emailAdmin = admin@example.com
+@adminPassword = AdminPassword123!
+
+### Login (usa email/password registrati)
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{emailAdmin}}",
+  "password": "{{adminPassword}}"
+}
+
+### Create First Admin (bootstrap - solo prima volta)
+POST {{miprimoprogetto_HostAddress}}/api/auth/create-first-admin
+Content-Type: application/json
+
+{
+  "name": "Admin",
+  "lastName": "System",
+  "email": "admin@example.com",
+  "password": "AdminPassword123!",
+  "tipoDocumento": "DNI",
+  "numeroDocumento": "98765432",
+  "phoneNumber": "+39 000 000 0000"
+}
+
+### Delete the admin
+DELETE {{miprimoprogetto_HostAddress}}/api/user/1
+Authorization: Bearer {{token}}
 
 #####################################################################
 #                            AUTH                                   #
@@ -22,7 +51,7 @@ Content-Type: application/json
   "email": "{{authEmail}}",
   "password": "{{authPassword}}",
   "tipoDocumento": "DNI",
-  "numeroDocumento": "12345678",
+  "numeroDocumento": "92345678",
   "phoneNumber": "+56912345678",
   "edad": "34",
   "genero": "M",
@@ -55,7 +84,7 @@ Content-Type: application/json
 
 {
   "email": "{{authEmail}}",
-  "resetToken": "INCOLLA_QUI_IL_RESET_TOKEN",
+  "resetToken": "wbQewC3fpLUHioAyj3P9AdcNX-dIwXagYSz02e2bg04",
   "newPassword": "NuovaPassword456!"
 }
 
@@ -79,21 +108,28 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### Get user by id
-GET {{miprimoprogetto_HostAddress}}/api/user/12
+GET {{miprimoprogetto_HostAddress}}/api/user/2
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ### Get user by email
 GET {{miprimoprogetto_HostAddress}}/api/user/email?email=einstein@gmail.com
 Accept: application/json
+
+### Get my profile (Best practice e-commerce)
+GET {{miprimoprogetto_HostAddress}}/api/user/me
+Accept: application/json
+Authorization: Bearer {{token}}
 
 
 #####################################################################
 #                        USER - CREATE                              #
 #####################################################################
 
-### Create new user
+### Create new user (Require Admin Role)
 POST {{miprimoprogetto_HostAddress}}/api/user
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "Albert 2",
@@ -112,19 +148,35 @@ Content-Type: application/json
 #####################################################################
 
 ### Update user
-PUT {{miprimoprogetto_HostAddress}}/api/user/2
+PUT {{miprimoprogetto_HostAddress}}/api/user/4
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "id": 2,
+  "id": 4,
   "name": "Albert",
   "lastName": "Einstein",
-  "email": "albert.einstein@gmail.com",
+  "email": "albert.einstein4@gmail.com",
   "phoneNumber": "+39 123 456 7890",
   "tipoDocumento": "PassportNumber",
   "numeroDocumento": "AB123456",
   "role": "Customer",
   "isActive": true
+}
+
+### Update my profile (Best practice e-commerce) il proprio profilo. 
+#Non è necessario specificare id, email, role o isActive. 
+#Il sistema aggiorna solo i campi modificabili.
+PUT {{miprimoprogetto_HostAddress}}/api/user/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Mario me",
+  "lastName": "Rossi me",
+  "phoneNumber": "+39 123 456 7890",
+  "tipoDocumento": "DNI",
+  "numeroDocumento": "92345678"
 }
 
 

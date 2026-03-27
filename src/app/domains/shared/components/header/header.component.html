@@ -45,7 +45,7 @@
                       <span class="leading-4">
                         <span class="block text-[11px]">Hola.</span>
                         @if (authService.isLoggedIn()) {
-                          <span class="block text-sm font-semibold">Mi cuenta</span>
+                          <span class="block text-sm font-semibold">{{ authService.displayName() }}</span>
                         } @else {
                           <span class="block text-sm font-semibold">Inicia sesión</span>
                         }
@@ -71,7 +71,7 @@
                       role="menu"
                     >
                       @if (authService.isLoggedIn()) {
-                        <a routerLink="/about" (click)="closeLoginMenu()" class="block px-5 py-2 text-sm hover:text-slate-900" role="menuitem">Mi cuenta</a>
+                        <a routerLink="/account/dashboard" (click)="closeLoginMenu()" class="block px-5 py-2 text-sm hover:text-slate-900" role="menuitem">Mi cuenta</a>
                         <div class="my-2 border-t border-slate-200"></div>
                         <button
                           type="button"

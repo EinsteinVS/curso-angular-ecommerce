@@ -16,6 +16,10 @@ export class ApiService {
     return this.http.post<T>(this.buildUrl(url), body);
   }
 
+  put<T>(url: string, body: unknown) {
+    return this.http.put<T>(this.buildUrl(url), body);
+  }
+
   private buildUrl(url: string) {
     if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;

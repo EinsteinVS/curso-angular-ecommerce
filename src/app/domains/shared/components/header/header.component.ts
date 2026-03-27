@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
 import { CartComponent} from '@shared/components/cart/cart.component';  
@@ -11,10 +11,14 @@ import { AuthService } from '../../../auth/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   showLoginMenu = signal(false);
   authService = inject(AuthService);
   private router = inject(Router);
+
+  ngOnInit() {
+    this.authService.loadCurrentUser().subscribe();
+  }
 
   openLoginMenu() { this.showLoginMenu.set(true); }
   closeLoginMenu() { this.showLoginMenu.set(false); }

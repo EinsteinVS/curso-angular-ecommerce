@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { loginResponse, RegisterRequest, RegisterResponse } from '@shared/models/login.model';
-import { tap, throwError } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
 import { StoreSession } from '../../core/models/session.model';
 import { SessionService } from '../../core/services/session.service';
@@ -12,10 +12,17 @@ type LoginApiResponse = loginResponse & {
   page?: StoreSession['page'];
 };
 
+type LoggedUser = {
+  name: string;
+  lastName: string;
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  currentUser = signal<LoggedUser | null>(null);
   
   constructor(private api: ApiService, private sessionService: SessionService) {
 
@@ -31,7 +38,6 @@ export class AuthService {
       password: password
     }).pipe(
       tap((response) => {
-        debugger
         if ((response as any)?.error) {
           throw new Error((response as any).error);
         }
@@ -43,6 +49,8 @@ export class AuthService {
         const session = this.extractSession(response);
         if (session) {
           this.sessionService.setSession(session);
+          this.currentUser.set(null);
+          this.loadCurrentUser().subscribe();
           return;
         }
 
@@ -60,6 +68,29 @@ export class AuthService {
 
   logout() {
     this.sessionService.clearSession();
+    this.currentUser.set(null);
+  }
+
+  loadCurrentUser() {
+    if (!this.isLoggedIn()) {
+      this.currentUser.set(null);
+      return of(null);
+    }
+
+    return this.api.get<LoggedUser>('/api/user/me').pipe(
+      tap((user) => this.currentUser.set(user)),
+      catchError(() => {
+        this.currentUser.set(null);
+        return of(null);
+      })
+    );
+  }
+
+  displayName() {
+    const user = this.currentUser();
+    if (!user) return 'Mi cuenta';
+
+    return `${user.name} ${user.lastName}`.trim();
   }
 
   private extractSession(response: LoginApiResponse): StoreSession | null {

@@ -1,0 +1,15 @@
+<nav class="rounded border border-slate-200 bg-white p-4">
+  <ul class="flex flex-col gap-2">
+    @for (item of menu; track item.path) {
+      <li>
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="bg-slate-900 text-white"
+          class="block rounded px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+        >
+          {{ item.label }}
+        </a>
+      </li>
+    }
+  </ul>
+</nav>
