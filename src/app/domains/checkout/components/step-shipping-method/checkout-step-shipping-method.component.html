@@ -1,0 +1,52 @@
+<div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+  <button
+    class="flex w-full items-center gap-4 px-6 py-4 text-left"
+    [class.cursor-default]="isActive"
+    [class.cursor-pointer]="isCompleted"
+    (click)="isCompleted ? edit.emit() : null">
+    <span
+      class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold"
+      [class.bg-blue-600]="isActive"
+      [class.text-white]="isActive"
+      [class.bg-green-500]="isCompleted"
+      [class.text-white]="isCompleted"
+      [class.bg-gray-200]="!isActive && !isCompleted"
+      [class.text-gray-500]="!isActive && !isCompleted">
+      @if (isCompleted) { ✓ } @else { 2 }
+    </span>
+    <span class="text-base font-semibold" [class.text-gray-800]="isActive || isCompleted" [class.text-gray-400]="!isActive && !isCompleted">
+      Shipping method
+    </span>
+    @if (isCompleted) {
+      <span class="ml-auto text-xs text-blue-600 underline">Edit</span>
+    }
+  </button>
+
+  @if (isActive) {
+    <div class="border-t border-gray-100 px-6 pb-6 pt-4 space-y-3">
+      @for (option of [
+        { value: 'free', label: 'Free Shipping', desc: '5-7 business days', price: 'FREE' },
+        { value: 'standard', label: 'Standard Shipping', desc: '3-5 business days', price: '$5.99' },
+        { value: 'express', label: 'Express Shipping', desc: '1-2 business days', price: '$14.99' }
+      ]; track option.value) {
+        <label class="flex cursor-pointer items-center gap-4 rounded-lg border border-gray-200 px-4 py-3 hover:border-blue-400"
+          [class.border-blue-500]="selectedShipping === option.value"
+          [class.bg-blue-50]="selectedShipping === option.value">
+          <input type="radio" name="shipping" [value]="option.value"
+            [checked]="selectedShipping === option.value"
+            (change)="shippingChange.emit($any(option.value))"
+            class="accent-blue-600" />
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-800">{{ option.label }}</p>
+            <p class="text-xs text-gray-400">{{ option.desc }}</p>
+          </div>
+          <span class="text-sm font-bold text-gray-800">{{ option.price }}</span>
+        </label>
+      }
+      <button (click)="continueStep.emit()"
+        class="mt-2 rounded bg-gray-900 px-6 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+        Continue to payment
+      </button>
+    </div>
+  }
+</div>

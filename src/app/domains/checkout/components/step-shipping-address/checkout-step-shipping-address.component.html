@@ -1,0 +1,88 @@
+<div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+  <button
+    class="flex w-full items-center gap-4 px-6 py-4 text-left"
+    [class.cursor-default]="isActive"
+    [class.cursor-pointer]="isCompleted"
+    (click)="isCompleted ? edit.emit() : null">
+    <span
+      class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold"
+      [class.bg-blue-600]="isActive"
+      [class.text-white]="isActive"
+      [class.bg-green-500]="isCompleted"
+      [class.text-white]="isCompleted"
+      [class.bg-gray-200]="!isActive && !isCompleted"
+      [class.text-gray-500]="!isActive && !isCompleted">
+      @if (isCompleted) { ✓ } @else { 1 }
+    </span>
+    <span class="text-base font-semibold text-gray-800">Shipping address</span>
+    @if (isCompleted) {
+      <span class="ml-auto text-xs text-blue-600 underline">Edit</span>
+    }
+  </button>
+
+  @if (isActive) {
+    <div class="border-t border-gray-100 px-6 pb-6 pt-4">
+      <p class="mb-4 text-xs text-gray-400">* Required fields</p>
+      <form [formGroup]="form" (ngSubmit)="continueStep.emit()" class="space-y-4">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">First Name *</label>
+            <input formControlName="firstName" type="text"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+              [class.border-red-400]="getControl('firstName')?.invalid && getControl('firstName')?.touched" />
+          </div>
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">Last Name *</label>
+            <input formControlName="lastName" type="text"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+              [class.border-red-400]="getControl('lastName')?.invalid && getControl('lastName')?.touched" />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">Address 1 - Street or P.O. Box *</label>
+            <input formControlName="address1" type="text"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+              [class.border-red-400]="getControl('address1')?.invalid && getControl('address1')?.touched" />
+          </div>
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">Address 2 - Apt, Suite, Floor</label>
+            <input formControlName="address2" type="text" placeholder="Leave blank if P.O. Box in Address 1"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">Zip Code *</label>
+            <input formControlName="zipCode" type="text"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+              [class.border-red-400]="getControl('zipCode')?.invalid && getControl('zipCode')?.touched" />
+          </div>
+          <div class="col-span-2">
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">City *</label>
+            <input formControlName="city" type="text"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+              [class.border-red-400]="getControl('city')?.invalid && getControl('city')?.touched" />
+          </div>
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">State *</label>
+            <select formControlName="state"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+              [class.border-red-400]="getControl('state')?.invalid && getControl('state')?.touched">
+              <option value="">Select...</option>
+              <option value="CA">CA</option>
+              <option value="NY">NY</option>
+              <option value="TX">TX</option>
+              <option value="FL">FL</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit"
+          class="mt-2 rounded bg-gray-900 px-6 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+          Continue to shipping method
+        </button>
+      </form>
+    </div>
+  }
+</div>

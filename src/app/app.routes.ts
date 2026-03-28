@@ -23,10 +23,11 @@ export const routes: Routes = [
             {
                 path: 'checkout',
                 canActivate: [authGuard],
-                loadComponent: () => import('./domains/checkout/pages/order/order.component')
+                loadChildren: () => import('./domains/checkout/checkout.routes').then(m => m.default)
             },
             {
                 path: 'account',
+                canActivate: [authGuard],
                 loadChildren: () => import('./domains/account/account.routes').then(m => m.default)
             },
             {

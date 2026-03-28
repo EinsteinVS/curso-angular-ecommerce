@@ -1,0 +1,66 @@
+<div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+  <button
+    class="flex w-full items-center gap-4 px-6 py-4 text-left"
+    [class.cursor-default]="isActive"
+    [class.cursor-pointer]="isCompleted"
+    (click)="isCompleted ? edit.emit() : null">
+    <span
+      class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold"
+      [class.bg-blue-600]="isActive"
+      [class.text-white]="isActive"
+      [class.bg-green-500]="isCompleted"
+      [class.text-white]="isCompleted"
+      [class.bg-gray-200]="!isActive && !isCompleted"
+      [class.text-gray-500]="!isActive && !isCompleted">
+      @if (isCompleted) { ✓ } @else { 3 }
+    </span>
+    <span class="text-base font-semibold" [class.text-gray-800]="isActive || isCompleted" [class.text-gray-400]="!isActive && !isCompleted">
+      Payment
+    </span>
+    @if (isCompleted) {
+      <span class="ml-auto text-xs text-blue-600 underline">Edit</span>
+    }
+  </button>
+
+  @if (isActive) {
+    <div class="border-t border-gray-100 px-6 pb-6 pt-4 space-y-4">
+      @for (method of [
+        { value: 'visa', label: 'Visa / Mastercard' },
+        { value: 'paypal', label: 'PayPal' }
+      ]; track method.value) {
+        <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 px-4 py-3 hover:border-blue-400"
+          [class.border-blue-500]="selectedPayment === method.value"
+          [class.bg-blue-50]="selectedPayment === method.value">
+          <input type="radio" name="payment" [value]="method.value"
+            [checked]="selectedPayment === method.value"
+            (change)="paymentChange.emit($any(method.value))"
+            class="accent-blue-600" />
+          <span class="text-sm font-semibold text-gray-800">{{ method.label }}</span>
+        </label>
+      }
+      @if (selectedPayment === 'visa') {
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div class="sm:col-span-2">
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">Card Number</label>
+            <input type="text" placeholder="1234 5678 9012 3456"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500" />
+          </div>
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">Expiry</label>
+            <input type="text" placeholder="MM/YY"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500" />
+          </div>
+          <div>
+            <label class="mb-1 block text-xs font-semibold uppercase text-gray-600">CVV</label>
+            <input type="text" placeholder="123"
+              class="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500" />
+          </div>
+        </div>
+      }
+      <button (click)="continueStep.emit()"
+        class="mt-2 rounded bg-gray-900 px-6 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+        Continue to review
+      </button>
+    </div>
+  }
+</div>

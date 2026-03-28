@@ -1,0 +1,29 @@
+<div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+  <button class="flex w-full items-center gap-4 px-6 py-4 text-left" [class.cursor-default]="isActive">
+    <span
+      class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold"
+      [class.bg-blue-600]="isActive"
+      [class.text-white]="isActive"
+      [class.bg-gray-200]="!isActive"
+      [class.text-gray-500]="!isActive">
+      4
+    </span>
+    <span class="text-base font-semibold" [class.text-gray-800]="isActive" [class.text-gray-400]="!isActive">
+      Review & place order
+    </span>
+  </button>
+
+  @if (isActive) {
+    <div class="border-t border-gray-100 px-6 pb-6 pt-4 space-y-3">
+      <div class="rounded-lg bg-gray-50 p-4 text-sm text-gray-700 space-y-1">
+        <p><span class="font-semibold">Address:</span> {{ addressText }}</p>
+        <p><span class="font-semibold">Shipping:</span> {{ selectedShipping }}</p>
+        <p><span class="font-semibold">Payment:</span> {{ selectedPayment }}</p>
+      </div>
+      <button (click)="placeOrder.emit()"
+        class="w-full rounded bg-blue-600 px-6 py-3 text-sm font-bold text-white hover:bg-blue-700">
+        Place Order
+      </button>
+    </div>
+  }
+</div>
