@@ -1,5 +1,7 @@
+
 import { Injectable, signal } from '@angular/core';
 import { loginResponse, RegisterRequest, RegisterResponse } from '@shared/models/login.model';
+import { ChangePasswordRequest, ChangePasswordResponse } from './models/change-password.model';
 import { catchError, of, tap } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
 import { StoreSession } from '../../core/models/session.model';
@@ -131,6 +133,10 @@ export class AuthService {
         }
       })
     );
+  }
+
+  changePassword(data: ChangePasswordRequest) {
+    return this.api.post<ChangePasswordResponse>('/api/auth/change-password', data);
   }
 
 }

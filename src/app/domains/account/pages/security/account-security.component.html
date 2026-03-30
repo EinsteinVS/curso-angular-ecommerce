@@ -1,7 +1,22 @@
 <h2 class="mb-4 text-xl font-semibold text-slate-900">Sicurezza</h2>
 
-<ul class="list-disc space-y-2 pl-5 text-sm text-slate-700">
-  <li>Cambio password</li>
+<form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="max-w-md space-y-4">
+  <div>
+    <label class="block text-sm font-medium text-slate-700">Password attuale</label>
+    <input type="password" formControlName="currentPassword" class="mt-1 w-full rounded border px-3 py-2 text-sm" [class.border-red-500]="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched">
+    <div *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched" class="text-xs text-red-500">Obbligatorio</div>
+  </div>
+  <div>
+    <label class="block text-sm font-medium text-slate-700">Nuova password</label>
+    <input type="password" formControlName="newPassword" class="mt-1 w-full rounded border px-3 py-2 text-sm" [class.border-red-500]="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
+    <div *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched" class="text-xs text-red-500">Minimo 8 caratteri</div>
+  </div>
+  <button type="submit" [disabled]="loading || passwordForm.invalid" class="rounded bg-emerald-600 px-4 py-2 text-white font-semibold hover:bg-emerald-700 disabled:opacity-50">Cambia password</button>
+  <div *ngIf="successMsg" class="text-green-600 text-sm">{{ successMsg }}</div>
+  <div *ngIf="errorMsg" class="text-red-600 text-sm">{{ errorMsg }}</div>
+</form>
+
+<ul class="list-disc space-y-2 pl-5 text-sm text-slate-700 mt-8">
   <li>Disconnessione da tutte le sessioni</li>
   <li>Abilitazione 2FA (quando disponibile)</li>
 </ul>
