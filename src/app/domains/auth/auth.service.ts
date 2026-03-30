@@ -17,6 +17,10 @@ type LoggedUser = {
   lastName: string;
 };
 
+type EmailAvailableResponse = {
+  available: boolean;
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -117,7 +121,7 @@ export class AuthService {
   }
 
   checkEmailExists(email: string) {
-    return this.api.get<boolean>(`/api/user/email?email=${email}`).pipe(
+    return this.api.get<EmailAvailableResponse>(`/api/auth/email-available?email=${email}`).pipe(
       tap({
         next: (response) => {
           console.log('checkEmailExists next:', response);

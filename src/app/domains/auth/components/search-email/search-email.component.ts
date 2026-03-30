@@ -37,8 +37,7 @@ export class SearchEmailComponent {
     this.authService.checkEmailExists(email).subscribe({
       next: (response) => {
         console.log('searchEmail: subscribe next', response);
-        if(response) {
-          
+        if(!response.available) {         
           this.router.navigate(['/auth/login'],{
             queryParams: { email }
           });

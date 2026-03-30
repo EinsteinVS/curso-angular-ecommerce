@@ -2,7 +2,7 @@
 #                            SETUP                                  #
 #####################################################################
 @miprimoprogetto_HostAddress = http://localhost:5268
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibWFyaW8ucm9zc2kyQGVtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNCIsInN1YiI6IjQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDdXN0b21lciIsIkRlcGFydG1lbnQiOiJDdXN0b21lckNhcmUiLCJFbXBsb3llZUlkIjoiVVNSLTQiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiI2NDlhNjIxMi05OTcwLTQ0ZmItYWEzMy1mZmIxYTNiMWY4YzIiLCJpYXQiOiIxNzc0NTk4NTI2IiwiUHJvZmlsZSI6InBlcnNvbiIsImV4cCI6MTc3NDYwMjEyNiwiaXNzIjoiTXlBcGkiLCJhdWQiOiJNeUFwaVVzZXJzIn0.8krImgpGG86I1oztb2lOqNUf3czMqrlSPF1ZF1iztQU
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIwMDYiLCJzdWIiOiIyMDA2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJEZXBhcnRtZW50IjoiSVQiLCJFbXBsb3llZUlkIjoiVVNSLTIwMDYiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiJjNWM3MDJkYi0zZmIwLTQ2MTQtYmJmNC0yZDM0ZWViYjQxZWQiLCJpYXQiOiIxNzc0ODYwNjk4IiwiUHJvZmlsZSI6InN0YWZmIiwiZXhwIjoxNzc0ODY0Mjk4LCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.przVJlz2ktCkiPl2O-AAs19mA4nUOzy6eMtRVP4P9Qs
 @authEmail = mario.rossi2@email.com
 @authPassword = NuovaPassword456!
 #@authPassword = PasswordSicura123!
@@ -70,6 +70,10 @@ Authorization: Bearer {{token}}
   "newPassword": "NuovaPassword456!"
 }
 
+### Check email disponibile (form registrazione - NO token richiesto)
+GET {{miprimoprogetto_HostAddress}}/api/auth/email-available?email=einstein@gmail.com
+Accept: application/json
+
 ### Forgot Password (genera reset token)
 POST {{miprimoprogetto_HostAddress}}/api/auth/forgot-password
 Content-Type: application/json
@@ -115,6 +119,7 @@ Authorization: Bearer {{token}}
 ### Get user by email
 GET {{miprimoprogetto_HostAddress}}/api/user/email?email=einstein@gmail.com
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ### Get my profile (Best practice e-commerce)
 GET {{miprimoprogetto_HostAddress}}/api/user/me
