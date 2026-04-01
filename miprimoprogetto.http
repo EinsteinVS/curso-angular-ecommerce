@@ -2,7 +2,7 @@
 #                            SETUP                                  #
 #####################################################################
 @miprimoprogetto_HostAddress = http://localhost:5268
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIwMDYiLCJzdWIiOiIyMDA2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJEZXBhcnRtZW50IjoiSVQiLCJFbXBsb3llZUlkIjoiVVNSLTIwMDYiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiJkZmZlODMxYS0xNTQ3LTQ1OTMtOTQzNy05M2I4YmNmZTkxNDgiLCJpYXQiOiIxNzc1MDI4MTkwIiwiUHJvZmlsZSI6InN0YWZmIiwiZXhwIjoxNzc1MDMxNzkwLCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.dNXNILAhMmjWw8Yp_Od9DS899VHlpBDk5adLR5-ITUw
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIwMDYiLCJzdWIiOiIyMDA2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJEZXBhcnRtZW50IjoiSVQiLCJFbXBsb3llZUlkIjoiVVNSLTIwMDYiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiIwZGQxNjYwMi0yZmMwLTRiYzgtYjRlMi0zODZiOTNhZmI4ZmEiLCJpYXQiOiIxNzc1MDQ2NDM5IiwiUHJvZmlsZSI6InN0YWZmIiwiZXhwIjoxNzc1MDUwMDM5LCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.dNHPv6-1WhxGX_ctYdnTEHaLHyGTTggCzhIKMJ2GQVo
 @authEmail = mario.rossi@email.com
 @authPassword = NuovaPassword456!9
 #@authPassword = PasswordSicura123!
@@ -31,6 +31,10 @@ Content-Type: application/json
   "email": "{{authEmail}}",
   "password": "{{authPassword}}"
 }
+
+### Logout (utente autenticato)
+POST {{miprimoprogetto_HostAddress}}/api/auth/logout
+Authorization: Bearer {{token}}
 
 ### Create First Admin (bootstrap - solo prima volta)
 POST {{miprimoprogetto_HostAddress}}/api/auth/create-first-admin

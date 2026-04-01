@@ -72,8 +72,17 @@ export class AuthService {
   }
 
   logout() {
-    this.sessionService.clearSession();
-    this.currentUser.set(null);
+    return this.api.post<{ message: string }>('/api/auth/logout', {}).pipe(
+      tap(() => {
+        this.sessionService.clearSession();
+        this.currentUser.set(null);
+      }),
+      catchError(() => {
+        this.sessionService.clearSession();
+        this.currentUser.set(null);
+        return of(null);
+      })
+    );
   }
 
   loadCurrentUser() {
