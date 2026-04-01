@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink ,Router} from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { ResponseStatus } from '@shared/models/ResponseStatus';
+import { LoginRequest } from '@shared/models/login.model';
 
 @Component({
   selector: 'app-login',
@@ -55,11 +56,20 @@ export class LoginComponent {
     this.responseStatus.set({ status: 'loading' });
     this.errorMessage.set('');
 
-    this.authService.login(email, password).subscribe({
+    const credentials: LoginRequest = { email, password };
+
+    this.authService.login(credentials).subscribe({
         next: (response) => {
           if (response?.token) {
             this.responseStatus.set({ status: 'success' });
-            this.router.navigate([`${this.pagRedirect()}`]);
+            
+            // Recupera l'URL salvato dal guard, oppure usa pagRedirect o '/'
+            let redirectUrl = this.authService.getRedirectUrl();
+            if (!redirectUrl || redirectUrl === '/') {
+              redirectUrl = this.pagRedirect() || '/';
+            }
+            
+            this.router.navigate([redirectUrl]);
             return;
           }
 

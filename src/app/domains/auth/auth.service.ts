@@ -1,6 +1,6 @@
 
 import { Injectable, signal } from '@angular/core';
-import { loginResponse, RegisterRequest, RegisterResponse } from '@shared/models/login.model';
+import { loginResponse, RegisterRequest, RegisterResponse, LoginRequest, AuthenticatedUser } from '@shared/models/login.model';
 import { ChangePasswordRequest, ChangePasswordResponse } from './models/change-password.model';
 import { catchError, of, tap } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
@@ -17,6 +17,7 @@ type LoginApiResponse = loginResponse & {
 type LoggedUser = {
   name: string;
   lastName: string;
+  email?: string;
 };
 
 type EmailAvailableResponse = {
@@ -29,6 +30,7 @@ type EmailAvailableResponse = {
 export class AuthService {
 
   currentUser = signal<LoggedUser | null>(null);
+  private redirectUrl = signal<string>('/');
   
   constructor(private api: ApiService, private sessionService: SessionService) {
 
@@ -38,11 +40,8 @@ export class AuthService {
     return this.api.post<RegisterResponse>('/api/auth/register', data);
   }
 
-  login(email: string, password: string) {
-    return this.api.post<LoginApiResponse>('/api/auth/login', {
-      email: email,
-      password: password
-    }).pipe(
+  login(credentials: LoginRequest) {
+    return this.api.post<LoginApiResponse>('/api/auth/login', credentials).pipe(
       tap((response) => {
         if ((response as any)?.error) {
           throw new Error((response as any).error);
@@ -97,6 +96,27 @@ export class AuthService {
     if (!user) return 'Mi cuenta';
 
     return `${user.name} ${user.lastName}`.trim();
+  }
+
+  /**
+   * Salva l'URL da cui l'utente è stato rediretto a login
+   * @param url URL da salvare
+   */
+  setRedirectUrl(url: string): void {
+    // Evita di redirigere a /auth/login
+    if (!url.includes('/auth/')) {
+      this.redirectUrl.set(url);
+    }
+  }
+
+  /**
+   * Recupera l'URL salvato e lo resetta
+   * @returns URL salvato o '/' come default
+   */
+  getRedirectUrl(): string {
+    const url = this.redirectUrl();
+    this.redirectUrl.set('/');
+    return url && url !== '/auth/login' ? url : '/';
   }
 
   private extractSession(response: LoginApiResponse): StoreSession | null {

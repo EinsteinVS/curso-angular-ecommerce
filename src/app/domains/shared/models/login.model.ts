@@ -1,11 +1,19 @@
 import { StoreSession } from '../../../core/models/session.model';
 
-export interface LoginUser {
+export interface LoginRequest {
+    email: string;
+    password: string;
+}
+
+export interface AuthenticatedUser {
     email: string;
     role: string;
     department: string;
     profile: string;
 }
+
+/** @deprecated Use AuthenticatedUser instead */
+export type LoginUser = AuthenticatedUser;
 
 export interface LoginCustomer {
     clienteID: string;
@@ -18,7 +26,7 @@ export interface LoginCustomer {
 export interface loginResponse {
     token: string;
     expiration?: string;
-    user?: LoginUser;
+    user?: AuthenticatedUser;
     customer?: LoginCustomer;
     storeSession?: StoreSession;
 }

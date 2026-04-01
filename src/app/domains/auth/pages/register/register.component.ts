@@ -6,6 +6,7 @@ import { ResponseStatus } from '@shared/models/ResponseStatus';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { SearchEmailComponent } from '../../components/search-email/search-email.component';
 import { AuthService } from '../../auth.service';
+import { LoginRequest } from '@shared/models/login.model';
 
 function passwordMatch(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password');
@@ -87,7 +88,8 @@ export class RegisterComponent implements OnDestroy {
       payments: payments || undefined
     }).subscribe({
       next: () => {
-        this.authService.login(email, password).subscribe({
+        const credentials: LoginRequest = { email, password };
+        this.authService.login(credentials).subscribe({
           next: () => {
             this.clearRedirectTimers();
             this.redirectSeconds.set(this.TIMER_SECONDS);
@@ -100,7 +102,9 @@ export class RegisterComponent implements OnDestroy {
             }, 1000);
             this.redirectTimeoutId = setTimeout(() => {
               this.clearRedirectTimers();
-              this.router.navigate(['/']);
+              // Usa l'URL salvato dal guard, altrimenti home
+              const redirectUrl = this.authService.getRedirectUrl();
+              this.router.navigate([redirectUrl || '/']);
             }, this.TIMER_SECONDS * 1000);
           },
           error: () => {
