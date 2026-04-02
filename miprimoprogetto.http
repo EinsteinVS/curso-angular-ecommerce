@@ -2,7 +2,7 @@
 #                            SETUP                                  #
 #####################################################################
 @miprimoprogetto_HostAddress = http://localhost:5268
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIwMDYiLCJzdWIiOiIyMDA2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJEZXBhcnRtZW50IjoiSVQiLCJFbXBsb3llZUlkIjoiVVNSLTIwMDYiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiIwZGQxNjYwMi0yZmMwLTRiYzgtYjRlMi0zODZiOTNhZmI4ZmEiLCJpYXQiOiIxNzc1MDQ2NDM5IiwiUHJvZmlsZSI6InN0YWZmIiwiZXhwIjoxNzc1MDUwMDM5LCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.dNHPv6-1WhxGX_ctYdnTEHaLHyGTTggCzhIKMJ2GQVo
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZWluc3RlaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxMDAzIiwic3ViIjoiMTAwMyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkN1c3RvbWVyIiwiRGVwYXJ0bWVudCI6IkN1c3RvbWVyQ2FyZSIsIkVtcGxveWVlSWQiOiJVU1ItMTAwMyIsIlBlcm1pc3Npb24iOiJDYW5EZWxldGVVc2VycyIsImp0aSI6IjNmZGExZWU0LTk2OWMtNGNkZS05MmU3LTU4NjU1NzJjMjI2MCIsImlhdCI6IjE3NzUxNDc2NzUiLCJQcm9maWxlIjoicGVyc29uIiwiZXhwIjoxNzc1MTUxMjc1LCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.0gT8NbA68LbqzcCuPr1eVKESnyBBKRb6QnWzQp5DUXQ
 @authEmail = mario.rossi@email.com
 @authPassword = NuovaPassword456!9
 #@authPassword = PasswordSicura123!
@@ -12,7 +12,7 @@
 
 @emailAdmin = admin@example.com
 @adminPassword = AdminPassword123!
-
+@tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIwMDYiLCJzdWIiOiIyMDA2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJEZXBhcnRtZW50IjoiSVQiLCJFbXBsb3llZUlkIjoiVVNSLTIwMDYiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiJiOTBlNjAyOC0zMTliLTQwNjItOTEzZi1kM2RhYTE3NzFhZGMiLCJpYXQiOiIxNzc1MTQ3OTM3IiwiUHJvZmlsZSI6InN0YWZmIiwiZXhwIjoxNzc1MTUxNTM3LCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.CMHXLpyAItKz6Y1dN3CFc2RDtCOi_LMA8j0RGq3ElGs"
 
 ### Login (usa email/password registrati)
 POST {{miprimoprogetto_HostAddress}}/api/auth/login
@@ -35,6 +35,12 @@ Content-Type: application/json
 ### Logout (utente autenticato)
 POST {{miprimoprogetto_HostAddress}}/api/auth/logout
 Authorization: Bearer {{token}}
+
+### Blacklist token revocati (solo Admin)
+GET {{miprimoprogetto_HostAddress}}/api/auth/blacklist
+Authorization: Bearer {{tokenAdmin}}
+
+
 
 ### Create First Admin (bootstrap - solo prima volta)
 POST {{miprimoprogetto_HostAddress}}/api/auth/create-first-admin

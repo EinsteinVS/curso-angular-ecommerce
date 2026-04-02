@@ -39,7 +39,11 @@ export class SessionService {
   private loadFromStorage() {
     const raw = localStorage.getItem(this.STORAGE_KEY);
     if (raw) {
-      this.session.set(JSON.parse(raw));
+      try {
+        this.session.set(JSON.parse(raw));
+      } catch {
+        localStorage.removeItem(this.STORAGE_KEY);
+      }
     }
   }
 

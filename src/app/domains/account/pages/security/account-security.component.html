@@ -11,6 +11,11 @@
     <input type="password" formControlName="newPassword" class="mt-1 w-full rounded border px-3 py-2 text-sm" [class.border-red-500]="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
     <div *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched" class="text-xs text-red-500">Minimo 8 caratteri</div>
   </div>
+  <div>
+    <label class="block text-sm font-medium text-slate-700">Conferma nuova password</label>
+    <input type="password" formControlName="confirmPassword" class="mt-1 w-full rounded border px-3 py-2 text-sm" [class.border-red-500]="(passwordForm.get('confirmPassword')?.invalid || passwordForm.hasError('passwordMismatch')) && passwordForm.get('confirmPassword')?.touched">
+    <div *ngIf="passwordForm.hasError('passwordMismatch') && passwordForm.get('confirmPassword')?.touched" class="text-xs text-red-500">Le password non coincidono</div>
+  </div>
   <button type="submit" [disabled]="loading || passwordForm.invalid" class="rounded bg-emerald-600 px-4 py-2 text-white font-semibold hover:bg-emerald-700 disabled:opacity-50">Cambia password</button>
   <div *ngIf="successMsg" class="text-green-600 text-sm">{{ successMsg }}</div>
   <div *ngIf="errorMsg" class="text-red-600 text-sm">{{ errorMsg }}</div>

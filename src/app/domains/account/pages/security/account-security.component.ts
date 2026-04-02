@@ -1,7 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/auth.service';
+
+function passwordMatch(control: AbstractControl): ValidationErrors | null {
+  const newPwd = control.get('newPassword');
+  const confirm = control.get('confirmPassword');
+  if (!newPwd || !confirm) return null;
+  return newPwd.value !== confirm.value ? { passwordMismatch: true } : null;
+}
 
 @Component({
   selector: 'app-account-security',
@@ -20,7 +27,8 @@ export default class AccountSecurityComponent {
     this.passwordForm = this.fb.group({
       currentPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
-    });
+      confirmPassword: ['', Validators.required],
+    }, { validators: passwordMatch });
   }
 
   changePassword() {
@@ -28,19 +36,16 @@ export default class AccountSecurityComponent {
     this.errorMsg = '';
     if (this.passwordForm.invalid) return;
     this.loading = true;
-    this.authService.changePassword(this.passwordForm.value).subscribe({
+    const { currentPassword, newPassword } = this.passwordForm.value;
+    this.authService.changePassword({ currentPassword, newPassword }).subscribe({
       next: (res) => {
-        debugger;
-         console.log('changePassword: subscribe next', res);
         this.successMsg = res.message || 'Password cambiata con successo!';
         this.passwordForm.reset();
         this.loading = false;
-       
       },
       error: (err) => {
         this.errorMsg = err?.error?.message || 'Errore nel cambio password.';
         this.loading = false;
-          console.error('changePassword: subscribe error', err);
       }
     });
   }

@@ -1,10 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink ,Router} from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { ResponseStatus } from '@shared/models/ResponseStatus';
 import { LoginRequest } from '@shared/models/login.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,25 +14,29 @@ import { LoginRequest } from '@shared/models/login.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   responseStatus = signal<ResponseStatus>({ status: 'initial' });
   errorMessage = signal<string>('');
   pagRedirect = signal<string>('');
+  private paramsSub: Subscription;
+
   constructor( 
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router
   ){
-
-
-  this.route.queryParams.subscribe(params => {
+    this.paramsSub = this.route.queryParams.subscribe(params => {
       const email = params['email'];
       if(email) {
         this.form.get('email')?.setValue(email);
         this.pagRedirect.set('/checkout');
       }
-  })
-}
+    });
+  }
+
+  ngOnDestroy() {
+    this.paramsSub.unsubscribe();
+  }
   
   private fb = new FormBuilder().nonNullable;
 

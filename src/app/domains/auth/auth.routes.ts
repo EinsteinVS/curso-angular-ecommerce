@@ -1,4 +1,3 @@
-import { LoginComponent } from './pages/login/login.component';
 import { publicGuard } from '../../core/guards/public.guard';
 
 const authRoutes = [
