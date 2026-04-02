@@ -1,21 +1,5 @@
-@if (registerCompleted()) {
-  <div class="flex min-h-[calc(100vh-130px)] items-center justify-center py-10">
-    <div class="w-full max-w-lg rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
-      <img class="mx-auto mb-5 h-8 w-auto" src="./assets/svg/logo_yard_sale.svg" alt="Tottus">
-      <h1 class="text-4xl font-bold text-slate-800">Te damos la bienvenida a Tottus</h1>
-      <p class="mx-auto mt-10 max-w-md text-3xl text-slate-700">Desde ahora puedes comenzar a comprar en Tottus. ¡Disfruta de todos nuestros beneficios!</p>
-
-      <button
-        type="button"
-        class="mt-12 w-full rounded-full bg-emerald-500 px-6 py-3 text-3xl font-semibold text-slate-900 transition hover:bg-emerald-400"
-        (click)="goToAbout()"
-      >
-        Ir a comprar
-      </button>
-
-      <p class="mt-8 text-xl text-slate-600">En {{ redirectSeconds() }}s serás redirigido a la página principal</p>
-    </div>
-  </div>
+@if (showVerificationScreen()) {
+  <app-email-verification [email]="emailToVerify()"></app-email-verification>
 } @else if (statusUser().status !== 'success') {
   <app-search-email (showRegisterForm)="onShowRegisterForm($event)"></app-search-email>
 } @else {

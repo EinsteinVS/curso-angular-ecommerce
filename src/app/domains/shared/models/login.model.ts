@@ -32,10 +32,10 @@ export interface loginResponse {
 }
 
 export interface RegisterResponse {
+    message: string;
     userId: number;
     email: string;
-    clienteId: string;
-    role: string;
+    verificationLink?: string;
 }
 
 export interface RegisterRequest {

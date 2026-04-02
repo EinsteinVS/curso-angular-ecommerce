@@ -2,6 +2,16 @@
 import { Injectable, signal } from '@angular/core';
 import { loginResponse, RegisterRequest, RegisterResponse, LoginRequest, AuthenticatedUser } from '@shared/models/login.model';
 import { ChangePasswordRequest, ChangePasswordResponse } from './models/change-password.model';
+import {
+  ForgotPasswordRequest,
+  ForgotPasswordResponse,
+  ResetPasswordRequest,
+  ResetPasswordResponse,
+} from './models/forgot-reset-password.model';
+import {
+  EmailVerificationRequest,
+  EmailVerificationResponse,
+} from './models/email-verification.model';
 import { catchError, of, tap } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
 import { StoreSession } from '../../core/models/session.model';
@@ -157,6 +167,22 @@ export class AuthService {
 
   changePassword(data: ChangePasswordRequest) {
     return this.api.post<ChangePasswordResponse>('/api/auth/change-password', data);
+  }
+
+  forgotPassword(data: ForgotPasswordRequest) {
+    return this.api.post<ForgotPasswordResponse>('/api/auth/forgot-password', data);
+  }
+
+  resetPassword(data: ResetPasswordRequest) {
+    return this.api.post<ResetPasswordResponse>('/api/auth/reset-password', data);
+  }
+
+  /**
+   * Verifica il token di verifica email
+   * @param data EmailVerificationRequest con email e token
+   */
+  verifyEmail(data: EmailVerificationRequest) {
+    return this.api.post<EmailVerificationResponse>('/api/auth/verify-email', data);
   }
 
 }

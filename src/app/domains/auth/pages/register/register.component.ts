@@ -5,8 +5,9 @@ import { RouterLink, Router } from '@angular/router';
 import { ResponseStatus } from '@shared/models/ResponseStatus';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SearchEmailComponent } from '../../components/search-email/search-email.component';
+import { EmailVerificationComponent } from '../email-verification/email-verification.component';
 import { AuthService } from '../../auth.service';
-import { LoginRequest } from '@shared/models/login.model';
+import { RegisterResponse } from '@shared/models/login.model';
 
 function passwordMatch(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password');
@@ -18,7 +19,7 @@ function passwordMatch(control: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, SearchEmailComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, SearchEmailComponent, EmailVerificationComponent],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -28,7 +29,8 @@ export class RegisterComponent implements OnDestroy {
   statusUser = signal<ResponseStatus>({ status: 'initial' });
   registerStatus = signal<ResponseStatus>({ status: 'initial' });
   registerErrorMessage = signal<string>('');
-  registerCompleted = signal(false);
+  emailToVerify = signal<string>('');
+  showVerificationScreen = signal(false);
   TIMER_SECONDS = 5;
   redirectSeconds = signal(this.TIMER_SECONDS);
   private redirectTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -87,30 +89,17 @@ export class RegisterComponent implements OnDestroy {
       addresses: addresses || undefined,
       payments: payments || undefined
     }).subscribe({
-      next: () => {
-        const credentials: LoginRequest = { email, password };
-        this.authService.login(credentials).subscribe({
-          next: () => {
-            this.clearRedirectTimers();
-            this.redirectSeconds.set(this.TIMER_SECONDS);
-            this.registerCompleted.set(true);
-            this.redirectIntervalId = setInterval(() => {
-              const remainingSeconds = this.redirectSeconds();
-              if (remainingSeconds > 0) {
-                this.redirectSeconds.set(remainingSeconds - 1);
-              }
-            }, 1000);
-            this.redirectTimeoutId = setTimeout(() => {
-              this.clearRedirectTimers();
-              // Usa l'URL salvato dal guard, altrimenti home
-              const redirectUrl = this.authService.getRedirectUrl();
-              this.router.navigate([redirectUrl || '/']);
-            }, this.TIMER_SECONDS * 1000);
-          },
-          error: () => {
-            this.router.navigate(['/auth/login'], { queryParams: { email } });
-          }
-        });
+      next: (response: RegisterResponse) => {
+        // Mostra lo schermo di verifica email instead of auto-login
+        this.emailToVerify.set(response?.email || email);
+        this.showVerificationScreen.set(true);
+        this.registerStatus.set({ status: 'success' });
+        
+        // Se il backend fornisce il link di verifica (modalità sviluppo)
+        if (response?.verificationLink) {
+          sessionStorage.setItem('verificationLink', response.verificationLink);
+        }
+        // Alternativa: se il backend fornisce token + email, genera il link localmente
       },
       error: (error) => {
         this.registerStatus.set({ status: 'error' });
@@ -122,6 +111,12 @@ export class RegisterComponent implements OnDestroy {
   goToAbout() {
     this.clearRedirectTimers();
     this.router.navigate(['/']);
+  }
+
+  resetVerificationScreen() {
+    this.showVerificationScreen.set(false);
+    this.emailToVerify.set('');
+    this.registerStatus.set({ status: 'initial' });
   }
 
   onShowRegisterForm(email: string) {

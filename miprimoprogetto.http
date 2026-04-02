@@ -3,16 +3,16 @@
 #####################################################################
 @miprimoprogetto_HostAddress = http://localhost:5268
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZWluc3RlaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxMDAzIiwic3ViIjoiMTAwMyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkN1c3RvbWVyIiwiRGVwYXJ0bWVudCI6IkN1c3RvbWVyQ2FyZSIsIkVtcGxveWVlSWQiOiJVU1ItMTAwMyIsIlBlcm1pc3Npb24iOiJDYW5EZWxldGVVc2VycyIsImp0aSI6IjNmZGExZWU0LTk2OWMtNGNkZS05MmU3LTU4NjU1NzJjMjI2MCIsImlhdCI6IjE3NzUxNDc2NzUiLCJQcm9maWxlIjoicGVyc29uIiwiZXhwIjoxNzc1MTUxMjc1LCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.0gT8NbA68LbqzcCuPr1eVKESnyBBKRb6QnWzQp5DUXQ
-@authEmail = mario.rossi@email.com
-@authPassword = NuovaPassword456!9
-#@authPassword = PasswordSicura123!
+@authEmail = einstein6@email.com
+@authPassword =06142045&Evs
+#@authPassword = PasswordSicura123! mario.rossi@email.com - NuovaPassword456!9
 
 #@authEmail = mario.rossi2@email.com
 #@authPassword = NuovaPassword456!
 
 @emailAdmin = admin@example.com
 @adminPassword = AdminPassword123!
-@tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIwMDYiLCJzdWIiOiIyMDA2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJEZXBhcnRtZW50IjoiSVQiLCJFbXBsb3llZUlkIjoiVVNSLTIwMDYiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiJiOTBlNjAyOC0zMTliLTQwNjItOTEzZi1kM2RhYTE3NzFhZGMiLCJpYXQiOiIxNzc1MTQ3OTM3IiwiUHJvZmlsZSI6InN0YWZmIiwiZXhwIjoxNzc1MTUxNTM3LCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.CMHXLpyAItKz6Y1dN3CFc2RDtCOi_LMA8j0RGq3ElGs"
+@tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIwMDYiLCJzdWIiOiIyMDA2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJEZXBhcnRtZW50IjoiSVQiLCJFbXBsb3llZUlkIjoiVVNSLTIwMDYiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiJiOTBlNjAyOC0zMTliLTQwNjItOTEzZi1kM2RhYTE3NzFhZGMiLCJpYXQiOiIxNzc1MTQ3OTM3IiwiUHJvZmlsZSI6InN0YWZmIiwiZXhwIjoxNzc1MTUxNTM3LCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.CMHXLpyAItKz6Y1dN3CFc2RDtCOi_LMA8j0RGq3ElGs
 
 ### Login (usa email/password registrati)
 POST {{miprimoprogetto_HostAddress}}/api/auth/login
@@ -58,7 +58,7 @@ Content-Type: application/json
 
 ### Delete the admin
 DELETE {{miprimoprogetto_HostAddress}}/api/user/1
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 #####################################################################
 #                            AUTH                                   #
@@ -74,7 +74,7 @@ Content-Type: application/json
   "email": "{{authEmail}}",
   "password": "{{authPassword}}",
   "tipoDocumento": "DNI",
-  "numeroDocumento": "92345678",
+  "numeroDocumento": "92345670",
   "phoneNumber": "+56912345678",
   "edad": "34",
   "genero": "M",
@@ -102,7 +102,7 @@ POST {{miprimoprogetto_HostAddress}}/api/auth/forgot-password
 Content-Type: application/json
 
 {
-  "email": "{{authEmail}}"
+  "email": "einstein@email.com"
 }
 
 ### Reset Password (usa il token ricevuto)
@@ -110,12 +110,159 @@ POST {{miprimoprogetto_HostAddress}}/api/auth/reset-password
 Content-Type: application/json
 
 {
+  "email": "einstein@email.com",
+  "resetToken": "2Tbw_DQuk-ah2TufmoolBu1LyCvzAoXKSqu9XG7AoGk",
+  "newPassword": "0614204&Evs"
+}
+### {{authEmail}}
+### Login (usa email/password registrati)
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
   "email": "{{authEmail}}",
-  "resetToken": "wbQewC3fpLUHioAyj3P9AdcNX-dIwXagYSz02e2bg04",
-  "newPassword": "NuovaPassword456!"
+  "password": "{{authPassword}}"
 }
 
-### Login (usa email/password registrati)
+### Logout (utente autenticato)
+POST {{miprimoprogetto_HostAddress}}/api/auth/logout
+Authorization: Bearer {{token}}
+
+### Blacklist token revocati (solo Admin)
+GET {{miprimoprogetto_HostAddress}}/api/auth/blacklist
+Authorization: Bearer {{tokenAdmin}}
+
+
+#####################################################################
+#                     SECURITY TESTS - NEW                          #
+#####################################################################
+
+### TEST 1: Register con weak password (DEVE FALLIRE - meno di 12 caratteri)
+POST {{miprimoprogetto_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "lastName": "WeakPassword",
+  "email": "security.test1@email.com",
+  "password": "weak123"
+}
+
+### TEST 2: Register con strong password (DEVE RIUSCIRE - 12+ chars, uppercase, lowercase, number, special)
+POST {{miprimoprogetto_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "lastName": "StrongPassword",
+  "email": "security.test2@email.com",
+  "password": "SecureP@ss123"
+}
+### security.test2@email.com
+@testEmail = einstein@email.com
+@testPassword = SecureP@ss123
+@testEmailWeakPwd = security.test3@email.com
+
+### TEST 3: Register con strong password (per test email verification)
+POST {{miprimoprogetto_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Email Test",
+  "lastName": "Verification",
+  "email": "{{testEmail}}",
+  "password": "{{testPassword}}"
+}
+
+### TEST 4: Login PRIMA di email verification (DEVE FALLIRE - "Email non ancora verificata")
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{testEmail}}",
+  "password": "{{testPassword}}"
+}
+
+### TEST 5: Verify Email (DEVE RIUSCIRE - usa token dall'email di verifica)
+### NOTA: Copia il token dall'email di verifica ricevuta durante la registrazione
+GET {{miprimoprogetto_HostAddress}}/api/auth/verify-email?email={{testEmail}}&token=hEx-wKS2gYIJJdha3QQuMg_MZim4sE68g8Rvsx2fDSY
+
+
+### TEST 6: Login DOPO email verification (DEVE RIUSCIRE)
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{testEmail}}",
+  "password": "{{testPassword}}"
+}
+
+### TEST 7: Change Password con weak password (DEVE FALLIRE - non abbastanza forte)
+POST {{miprimoprogetto_HostAddress}}/api/auth/change-password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "currentPassword": "{{authPassword}}",
+  "newPassword": "weak99"
+}
+
+### TEST 8: Change Password con strong password (DEVE RIUSCIRE)
+POST {{miprimoprogetto_HostAddress}}/api/auth/change-password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "currentPassword": "{{authPassword}}",
+  "newPassword": "NewSecure@Pass9"
+}
+
+### TEST 9: Account Lockout - Tentativo 1 (password sbagliata)
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{authEmail}}",
+  "password": "wrongpassword1"
+}
+
+### TEST 10: Account Lockout - Tentativo 2 (password sbagliata)
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{authEmail}}",
+  "password": "wrongpassword2"
+}
+
+### TEST 11: Account Lockout - Tentativo 3 (password sbagliata)
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{authEmail}}",
+  "password": "wrongpassword3"
+}
+
+### TEST 12: Account Lockout - Tentativo 4 (password sbagliata)
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{authEmail}}",
+  "password": "wrongpassword4"
+}
+
+### TEST 13: Account Lockout - Tentativo 5 (DEVE BLOCCARE ACCOUNT)
+POST {{miprimoprogetto_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{authEmail}}",
+  "password": "wrongpassword5"
+}
+
+### TEST 14: Account Lockout - Login con password CORRETTA ma account bloccato (DEVE FALLIRE - "Account bloccato per X minuti")
 POST {{miprimoprogetto_HostAddress}}/api/auth/login
 Content-Type: application/json
 
@@ -132,10 +279,10 @@ Content-Type: application/json
 ### Get all users (Require Auth)
 GET {{miprimoprogetto_HostAddress}}/api/user
 Accept: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 ### Get user by id
-GET {{miprimoprogetto_HostAddress}}/api/user/2
+GET {{miprimoprogetto_HostAddress}}/api/user/4
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -157,7 +304,7 @@ Authorization: Bearer {{token}}
 ### Create new user (Require Admin Role)
 POST {{miprimoprogetto_HostAddress}}/api/user
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "name": "Albert 2",
@@ -215,7 +362,7 @@ Authorization: Bearer {{token}}
 ### Delete user (Require Admin Role)
 DELETE {{miprimoprogetto_HostAddress}}/api/user/13
 Accept: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 
 #####################################################################
@@ -238,7 +385,7 @@ Accept: application/json
 ### Create new category (Require Admin or Manager)
 POST {{miprimoprogetto_HostAddress}}/api/category
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "name": "Electronics",
@@ -255,7 +402,7 @@ Authorization: Bearer {{token}}
 ### Update category (Require Admin or Manager)
 PUT {{miprimoprogetto_HostAddress}}/api/category/1
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "id": 1,
@@ -272,7 +419,7 @@ Authorization: Bearer {{token}}
 
 ### Delete category (Require Admin Role)
 DELETE {{miprimoprogetto_HostAddress}}/api/category/1
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 
 #####################################################################
@@ -295,7 +442,7 @@ Accept: application/json
 ### Create new product (Require Admin or Manager)
 POST {{miprimoprogetto_HostAddress}}/api/product
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "sku": "ELEC-006",
@@ -318,7 +465,7 @@ Authorization: Bearer {{token}}
 ### Update product (Require Admin or Manager)
 PUT {{miprimoprogetto_HostAddress}}/api/product/2
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "id": 2,
@@ -341,7 +488,7 @@ Authorization: Bearer {{token}}
 
 ### Delete product (Require Admin Role)
 DELETE {{miprimoprogetto_HostAddress}}/api/product/1
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 
 #####################################################################
@@ -364,7 +511,7 @@ Accept: application/json
 ### Add image to product (Require Admin or Manager)
 POST {{miprimoprogetto_HostAddress}}/api/products/1002/images
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "productId": 1002,
@@ -377,7 +524,7 @@ Authorization: Bearer {{token}}
 ### Add second image to product (Require Admin or Manager)
 POST {{miprimoprogetto_HostAddress}}/api/products/1002/images
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "productId": 1002,
@@ -395,7 +542,7 @@ Authorization: Bearer {{token}}
 ### Update product image (Require Admin or Manager)
 PUT {{miprimoprogetto_HostAddress}}/api/products/2/images/3
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "id": 3,
@@ -413,4 +560,4 @@ Authorization: Bearer {{token}}
 
 ### Delete product image (Require Admin)
 DELETE {{miprimoprogetto_HostAddress}}/api/products/2/images/1
-Authorization: Bearer {{token}}
+Authorization: Bearer {{tokenAdmin}}
