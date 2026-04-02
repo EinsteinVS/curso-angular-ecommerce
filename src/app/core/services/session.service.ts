@@ -44,6 +44,6 @@ export class SessionService {
   }
 
   isLoggedIn() {
-    return !!this.getAuthToken() || !!this.session()?.login?.clienteID;
+    return !!this.getAuthToken();
   }
 }
