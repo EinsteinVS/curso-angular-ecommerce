@@ -27,16 +27,13 @@ export class SearchEmailComponent {
   searchEmail() {
     if(this.formUser.invalid){
       this.formUser.markAllAsTouched();
-      console.warn('searchEmail: form inválido', this.formUser.value);
       return;
     }
 
     const { email } = this.formUser.getRawValue();
-    console.log('searchEmail: request start', email);
 
     this.authService.checkEmailExists(email).subscribe({
       next: (response) => {
-        console.log('searchEmail: subscribe next', response);
         if(!response.available) {         
           this.router.navigate(['/auth/login'],{
             queryParams: { email }
@@ -46,8 +43,7 @@ export class SearchEmailComponent {
 
         this.showRegisterForm.emit(email);
       },
-      error: (error) => {
-        console.error('searchEmail: subscribe error', error);
+      error: () => {
         this.showRegisterForm.emit(email);
       }
     });

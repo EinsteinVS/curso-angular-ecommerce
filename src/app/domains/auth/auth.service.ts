@@ -152,16 +152,7 @@ export class AuthService {
   }
 
   checkEmailExists(email: string) {
-    return this.api.get<EmailAvailableResponse>(`/api/auth/email-available?email=${email}`).pipe(
-      tap({
-        next: (response) => {
-          console.log('checkEmailExists next:', response);
-        },
-        error: (error) => {
-          console.error('checkEmailExists error:', error);
-        }
-      })
-    );
+    return this.api.get<EmailAvailableResponse>(`/api/auth/email-available?email=${email}`);
   }
 
   changePassword(data: ChangePasswordRequest) {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { ResponseStatus } from '@shared/models/ResponseStatus';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { SearchEmailComponent } from '../../components/search-email/search-email.component';
 import { AuthService } from '../../auth.service';
 import { LoginRequest } from '@shared/models/login.model';
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnDestroy {
   private redirectTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private redirectIntervalId: ReturnType<typeof setInterval> | null = null;
   
-  constructor(private router: Router, private http: HttpClient, private authService: AuthService) { 
+  constructor(private router: Router, private authService: AuthService) { 
     
   }
 
@@ -113,8 +113,6 @@ export class RegisterComponent implements OnDestroy {
         });
       },
       error: (error) => {
-        debugger;
-        console.error('register error:', error);
         this.registerStatus.set({ status: 'error' });
         this.registerErrorMessage.set(this.getRegisterErrorMessage(error));
       }
@@ -129,37 +127,6 @@ export class RegisterComponent implements OnDestroy {
   onShowRegisterForm(email: string) {
     this.form.patchValue({ email });
     this.statusUser.set({ status: 'success' });
-  }
-
-  validaUser(){
-    if(this.formUser.invalid){
-        this.formUser.markAllAsTouched();
-      return;
-    }
-     debugger;
-    const email = this.formUser.get('email')?.value;
-    this.http.get<ResponseStatus>(`http://localhost:5268/api/user/email?email=${email}`).subscribe(response => {
-      console.log('Respuesta de la API:', response);
-      if(response.status === 'error') {
-        //this.statusUser.set({ status: 'error' });
-        this.router.navigate(['/auth/register'],{
-          queryParams: { email }
-        });
-      } else {
-        //this.statusUser.set({ status: 'error' });
-        this.router.navigate(['/auth/login'],{
-          queryParams: { email }
-        });
-        //this.statusUser.set({ status: 'success' });
-      }
-    }, error => {
-       this.router.navigate(['/auth/register'],{
-          queryParams: { email }
-        });
-      console.error('Error al validar el usuario:', error);
-      this.statusUser.set({ status: 'success' });
-    });
-   
   }
 
   ngOnDestroy() {
