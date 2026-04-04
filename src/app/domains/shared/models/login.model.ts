@@ -26,9 +26,16 @@ export interface LoginCustomer {
 export interface loginResponse {
     token: string;
     expiration?: string;
+    accessTokenExpiresIn?: number;
     user?: AuthenticatedUser;
     customer?: LoginCustomer;
     storeSession?: StoreSession;
+}
+
+export interface RefreshTokenResponse {
+    token: string;
+    accessTokenExpiresIn: number;
+    tokenType: string;
 }
 
 export interface RegisterResponse {

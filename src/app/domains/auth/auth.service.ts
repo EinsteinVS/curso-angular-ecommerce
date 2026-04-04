@@ -1,6 +1,6 @@
 
 import { Injectable, signal } from '@angular/core';
-import { loginResponse, RegisterRequest, RegisterResponse, LoginRequest, AuthenticatedUser } from '@shared/models/login.model';
+import { loginResponse, RefreshTokenResponse, RegisterRequest, RegisterResponse, LoginRequest, AuthenticatedUser } from '@shared/models/login.model';
 import { ChangePasswordRequest, ChangePasswordResponse } from './models/change-password.model';
 import {
   ForgotPasswordRequest,
@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest) {
-    return this.api.post<LoginApiResponse>('/api/auth/login', credentials).pipe(
+    return this.api.post<LoginApiResponse>('/api/auth/login', credentials, { withCredentials: true }).pipe(
       tap((response) => {
         if ((response as any)?.error) {
           throw new Error((response as any).error);
@@ -82,7 +82,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.api.post<{ message: string }>('/api/auth/logout', {}).pipe(
+    return this.api.post<{ message: string }>('/api/auth/logout', {}, { withCredentials: true }).pipe(
       tap(() => {
         this.sessionService.clearSession();
         this.currentUser.set(null);
@@ -91,6 +91,18 @@ export class AuthService {
         this.sessionService.clearSession();
         this.currentUser.set(null);
         return of(null);
+      })
+    );
+  }
+
+  refreshToken() {
+    return this.api.post<RefreshTokenResponse>('/api/auth/refresh', {}, { withCredentials: true }).pipe(
+      tap((response) => {
+        if (!response?.token) {
+          throw new Error('REFRESH_TOKEN_MISSING');
+        }
+
+        this.sessionService.setAuthToken(response.token);
       })
     );
   }

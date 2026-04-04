@@ -2,9 +2,9 @@
 #                            SETUP                                  #
 #####################################################################
 @miprimoprogetto_HostAddress = http://localhost:5268
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZWluc3RlaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxMDAzIiwic3ViIjoiMTAwMyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkN1c3RvbWVyIiwiRGVwYXJ0bWVudCI6IkN1c3RvbWVyQ2FyZSIsIkVtcGxveWVlSWQiOiJVU1ItMTAwMyIsIlBlcm1pc3Npb24iOiJDYW5EZWxldGVVc2VycyIsImp0aSI6IjNmZGExZWU0LTk2OWMtNGNkZS05MmU3LTU4NjU1NzJjMjI2MCIsImlhdCI6IjE3NzUxNDc2NzUiLCJQcm9maWxlIjoicGVyc29uIiwiZXhwIjoxNzc1MTUxMjc1LCJpc3MiOiJNeUFwaSIsImF1ZCI6Ik15QXBpVXNlcnMifQ.0gT8NbA68LbqzcCuPr1eVKESnyBBKRb6QnWzQp5DUXQ
-@authEmail = einstein6@email.com
-@authPassword =06142045&Evs
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZWluc3RlaW45QGVtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMzAxMyIsInN1YiI6IjMwMTMiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDdXN0b21lciIsIkRlcGFydG1lbnQiOiJDdXN0b21lckNhcmUiLCJFbXBsb3llZUlkIjoiVVNSLTMwMTMiLCJQZXJtaXNzaW9uIjoiQ2FuRGVsZXRlVXNlcnMiLCJqdGkiOiI5Nzg1NDdlYS0wMjdjLTRkZTQtOGE1ZC1lODk2NDQ5MmQ3M2QiLCJpYXQiOiIxNzc1MzE4MzUzIiwiUHJvZmlsZSI6InBlcnNvbiIsImV4cCI6MTc3NTMyMTk1MywiaXNzIjoiTXlBcGkiLCJhdWQiOiJNeUFwaVVzZXJzIn0.odu5fvRVvb-tz4h_btc4n-1eg6dhIXIm2WNDPakGU4E
+@authEmail = einstein9@email.com
+@authPassword =06140204&Evs
 #@authPassword = PasswordSicura123! mario.rossi@email.com - NuovaPassword456!9
 
 #@authEmail = mario.rossi2@email.com
@@ -22,6 +22,11 @@ Content-Type: application/json
   "email": "{{emailAdmin}}",
   "password": "{{adminPassword}}"
 }
+
+### Refresh access token (HttpOnly cookie-based, NO body required)
+### Flusso: browser invia cookie refreshToken automaticamente, ricevi nuovo access token
+### Token rotation: vecchio refresh token revocato, nuovo refresh token nel Set-Cookie
+POST {{miprimoprogetto_HostAddress}}/api/auth/refresh
 
 ### Login (usa email/password registrati)
 POST {{miprimoprogetto_HostAddress}}/api/auth/login
