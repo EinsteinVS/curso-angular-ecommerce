@@ -11,18 +11,28 @@ const PUBLIC_ENDPOINTS = [
   '/api/auth/login',
   '/api/auth/register',
   '/api/auth/email-available',
-  '/api/auth/change-password',
-  '/api/auth/refresh',
+  '/api/auth/forgot-password',
+  '/api/auth/reset-password',
+  '/api/auth/verify-email',
 ];
 
 const REFRESH_ENDPOINT = '/api/auth/refresh';
 
+function getPathname(url: string): string {
+  try {
+    return new URL(url, window.location.origin).pathname;
+  } catch {
+    return url;
+  }
+}
+
 function isPublicEndpoint(url: string): boolean {
-  return PUBLIC_ENDPOINTS.some(endpoint => url.includes(endpoint));
+  const path = getPathname(url);
+  return PUBLIC_ENDPOINTS.some((endpoint) => path === endpoint);
 }
 
 function isRefreshEndpoint(url: string): boolean {
-  return url.includes(REFRESH_ENDPOINT);
+  return getPathname(url) === REFRESH_ENDPOINT;
 }
 
 function addAuthHeader(req: Parameters<HttpInterceptorFn>[0], token: string) {
